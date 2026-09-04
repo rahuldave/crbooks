@@ -1,0 +1,29 @@
+[project]
+name = "crbooks-public-catalog"
+version = "0.1.0"
+description = "Build and verify the public CRBook catalog website"
+requires-python = ">=3.11"
+dependencies = [
+  "pillow>=11,<13",
+]
+
+[dependency-groups]
+dev = [
+  "pytest>=8,<9",
+  "ruff>=0.12,<1",
+]
+
+[tool.pytest.ini_options]
+addopts = "-q"
+pythonpath = ["."]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP"]
+
+[tool.ruff.lint.per-file-ignores]
+"scripts/build_public_catalog.py" = ["E501"]
