@@ -4,6 +4,8 @@ This repository publishes a curated catalog of **61 English public-domain
 Project Gutenberg books** in `.crbook` format. Browse by subject, inspect the
 source edition, and download any book directly from the catalog website.
 
+**[Browse and download the public CRBook catalog](https://rahuldave.com/crbooks/)**
+
 The website is generated into `docs/`; the package archives live outside Git
 history as assets on one immutable, versioned GitHub Release. Every Download
 button points directly to its matching release asset. `docs/catalog.json`
