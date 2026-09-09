@@ -6,10 +6,32 @@ source edition, and download any book directly from the catalog website.
 
 **[Browse and download the public CRBook catalog](https://rahuldave.com/crbooks/)**
 
+**[Read the open CRBook format specification](https://rahuldave.com/crbooks/spec/)**
+
 The website is generated into `docs/`; the package archives live outside Git
 history as assets on one immutable, versioned GitHub Release. Every Download
 button points directly to its matching release asset. `docs/catalog.json`
 records the source URL, byte size, and SHA-256 checksum for every archive.
+
+## Open format specification
+
+The website renders the canonical portable-book package contract from
+`close_reading/internal_docs/ipad_book_package_spec.md`. The build publishes a
+styled page at `docs/spec/index.html` and an exact Markdown copy at
+`docs/crbook-spec.md`; neither generated file is a second hand-maintained
+source of truth. Public readers can inspect the generated Markdown directly,
+and `docs/catalog.json` records its SHA-256 checksum.
+
+Maintainers with the canonical sibling repository checked out can detect any
+divergence between the two repositories explicitly:
+
+```bash
+just spec-check
+```
+
+`just verify-source` runs the normal repository checks and this cross-repository
+comparison together. Override `CRBOOK_SPEC_SOURCE` if the sibling checkout is
+not at the default `../close_reading` path.
 
 ## Why GitHub Releases, not GitHub Packages?
 
@@ -52,10 +74,12 @@ uv sync --all-groups
 
 CRBOOK_PACKAGE_ROOT=/path/to/packages \
 CRBOOK_BOOKS_ROOT=/path/to/data/books \
+CRBOOK_SPEC_SOURCE=/path/to/close_reading/internal_docs/ipad_book_package_spec.md \
 CRBOOK_RELEASE_TAG=crbooks-YYYY-MM-DD \
 just build
 
 just verify-local
+just spec-check
 ```
 
 `just build` refuses anything other than the exact 61-row English public

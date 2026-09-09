@@ -4,6 +4,7 @@ version = "0.1.0"
 description = "Build and verify the public CRBook catalog website"
 requires-python = ">=3.11"
 dependencies = [
+  "markdown>=3.8,<4",
   "pillow>=11,<13",
 ]
 

@@ -1135,6 +1135,12 @@
   "format": "public-crbook-catalog",
   "release_tag": "crbooks-2026-09-04",
   "repository": "rahuldave/crbooks",
+  "spec": {
+    "format": "crbook-package-spec",
+    "markdown_url": "crbook-spec.md",
+    "sha256": "db64a0d7d723a69566b0f2bba2d65dc8ea75fc85cc6f08f6e68f46da8fa69ec2",
+    "url": "spec/"
+  },
   "total_bytes": 463534807,
   "total_size": "442.1 MB",
   "version": 1

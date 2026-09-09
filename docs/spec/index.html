@@ -1,0 +1,503 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="The open specification for portable CRBook reading packages.">
+  <title>Portable Book Package · CRBooks</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="spec-page">
+  <header class="spec-hero">
+    <nav class="topbar" aria-label="Primary">
+      <a class="wordmark" href="../">CRBooks</a>
+      <div>
+        <a href="./" aria-current="page">Format spec</a>
+        <a href="../catalog.json">Catalog JSON</a>
+        <a href="https://github.com/rahuldave/crbooks">GitHub</a>
+      </div>
+    </nav>
+    <div class="spec-hero-copy">
+      <p class="eyebrow">Open format specification</p>
+      <h1>Portable Book Package</h1>
+      <p class="spec-lede">The portable, offline package contract used by the Close Reading reader. This page is generated directly from the canonical Markdown in the <code>close_reading</code> repository.</p>
+      <div class="spec-actions">
+        <a class="spec-action-primary" href="../crbook-spec.md">View source Markdown</a>
+        <a href="../">Browse the catalog</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="spec-main">
+    <div class="spec-layout">
+      <aside class="spec-sidebar">
+        <nav class="spec-toc" aria-label="Specification contents">
+          <p>On this page</p>
+          <div class="toc">
+<ul>
+<li><a href="#problem-statement">Problem Statement</a></li>
+<li><a href="#proposed-solution">Proposed Solution</a></li>
+<li><a href="#scope">Scope</a><ul>
+<li><a href="#in-scope">In Scope</a></li>
+<li><a href="#out-of-scope">Out of Scope</a></li>
+</ul>
+</li>
+<li><a href="#package-layout">Package Layout</a></li>
+<li><a href="#required-files">Required Files</a></li>
+<li><a href="#optional-files">Optional Files</a></li>
+<li><a href="#existing-producers">Existing Producers</a></li>
+<li><a href="#metadata-contract">Metadata Contract</a></li>
+<li><a href="#cover-and-thumbnail-contract">Cover And Thumbnail Contract</a></li>
+<li><a href="#collection-creation">Collection Creation</a></li>
+<li><a href="#markdown-rules">Markdown Rules</a></li>
+<li><a href="#derived-state">Derived State</a></li>
+<li><a href="#import-validation">Import Validation</a></li>
+<li><a href="#executable-checks">Executable Checks</a></li>
+<li><a href="#acceptance-criteria">Acceptance Criteria</a></li>
+<li><a href="#open-questions">Open Questions</a></li>
+<li><a href="#references">References</a></li>
+</ul>
+</div>
+
+        </nav>
+      </aside>
+      <article class="spec-content">
+        <blockquote>
+<p><strong>Status (2026-09-04): active package contract.</strong> The iPad-specific Files,
+security-scoped URL, type-registration, and import UI requirements are defined
+in
+<span class="source-reference"><code>apps/ipad/internal_docs/ipad_app_implementation_spec.md</code></span>.
+This document remains the source of truth for the <code>.crbook</code> archive payload and
+validation contract.</p>
+<p>The macOS Part 9 baseline at <code>d2cb945</code> proved that imported packages remain
+portable when <code>book_imports.package_path</code> stores only the package filename.
+The iPad Files flow must preserve that rule and must never persist a provider,
+staging, simulator, or app-container absolute path.</p>
+</blockquote>
+<h2 id="problem-statement">Problem Statement<a class="headerlink" href="#problem-statement" title="Permanent link">¶</a></h2>
+<p>Close Reading needs a portable, offline-importable book format that is useful
+outside the current FastAPI server. The current server app ingests generated
+book folders from <code>data/books/&lt;collection&gt;/&lt;book&gt;/</code> and derives chapters, cells,
+locators, hashes, search rows, annotations, AI interactions, and exports in
+SQLite. The portable format should preserve the durable source material only:
+Markdown, metadata, and local assets.</p>
+<h2 id="proposed-solution">Proposed Solution<a class="headerlink" href="#proposed-solution" title="Permanent link">¶</a></h2>
+<p>Use a ZIP archive whose payload is a single Close Reading book folder. The
+folder should be compatible with the existing generated and ingested book
+folders first; downstream consumers such as the Apple apps can normalize that
+data into a stricter internal model after import.</p>
+<p>Do not require a new metadata schema before accepting existing converter output.
+A valid v1 package is a folder that could live at
+<code>data/books/&lt;collection&gt;/&lt;book_slug&gt;/</code> after the current conversion/ingestion
+pipeline has produced or normalized it.</p>
+<p>The preferred file extension for app association is <code>.crbook</code>, with contents
+identical to a <code>.zip</code>. The importer should also accept <code>.zip</code> during early
+development.</p>
+<h2 id="scope">Scope<a class="headerlink" href="#scope" title="Permanent link">¶</a></h2>
+<h3 id="in-scope">In Scope<a class="headerlink" href="#in-scope" title="Permanent link">¶</a></h3>
+<ul>
+<li>Single-book ZIP/package structure.</li>
+<li>Required and optional files inside the book folder.</li>
+<li>Metadata normalization for existing generated book folders.</li>
+<li>Markdown parsing expectations for generic books and contracts.</li>
+<li>Import validation rules for app, deploy, and package tooling.</li>
+</ul>
+<h3 id="out-of-scope">Out of Scope<a class="headerlink" href="#out-of-scope" title="Permanent link">¶</a></h3>
+<ul>
+<li>Reader notes, highlights, AI interactions, summaries, tags, and exports.</li>
+<li>Multi-user synchronization.</li>
+<li>iCloud sync or cross-device merge semantics.</li>
+<li>Batch collection import, except for a compatible future layout sketch.</li>
+<li>Re-converting EPUB or PDF sources on device.</li>
+</ul>
+<h2 id="package-layout">Package Layout<a class="headerlink" href="#package-layout" title="Permanent link">¶</a></h2>
+<p>Preferred single-book archive payload:</p>
+<pre><code class="language-text">&lt;book_slug&gt;/
+  book.md
+  metadata.json
+  assets/
+    &lt;relative image/media paths&gt;
+  book.html
+  conversion_manifest.json
+  README.md
+  original_epub/
+  original_pdf/
+</code></pre>
+<p>This is the same shape used by deployed folders under
+<code>data/books/&lt;Collection&gt;/&lt;book_slug&gt;/</code>. Some conversion workflows produce a
+staging layout of <code>&lt;collection&gt;/books/&lt;book_slug&gt;/</code> with collection-level
+<code>manifest.json</code> and <code>manifest.tsv</code>; a v1 single-book package should contain
+only the book folder, not the whole staging collection.</p>
+<p>The importer should also accept archives where <code>book.md</code> is at the archive root:</p>
+<pre><code class="language-text">book.md
+metadata.json
+assets/
+</code></pre>
+<p>Future collection archives may wrap multiple books:</p>
+<pre><code class="language-text">&lt;collection_slug&gt;/
+  manifest.json
+  manifest.tsv
+  books/
+    &lt;book_slug&gt;/
+      book.md
+      metadata.json
+      assets/
+</code></pre>
+<p>Single-book import is the v1 book-package requirement. Collection import should
+be treated as a separate package-set or app-route feature.</p>
+<h2 id="required-files">Required Files<a class="headerlink" href="#required-files" title="Permanent link">¶</a></h2>
+<p><code>book.md</code></p>
+<ul>
+<li>UTF-8 Markdown.</li>
+<li>The durable reading source.</li>
+<li>Local images must use relative links, usually under <code>assets/</code>.</li>
+<li>Chapter boundaries are derived by the importer from headings and tables of
+  contents, not stored in the package.</li>
+</ul>
+<p><code>metadata.json</code></p>
+<ul>
+<li>UTF-8 JSON object.</li>
+<li>All current converters and normalized ingested folders write this file.</li>
+<li>Required for v1 app packages unless the app is deliberately accepting an
+  old hand-authored folder. In that compatibility case, derive title from the
+  first nonblank Markdown line and slug from the folder name.</li>
+</ul>
+<h2 id="optional-files">Optional Files<a class="headerlink" href="#optional-files" title="Permanent link">¶</a></h2>
+<p><code>assets/</code></p>
+<ul>
+<li>Local book media referenced by <code>book.md</code>, <code>book.html</code>, or
+  <code>metadata.cover_image.path</code>.</li>
+<li>Paths are relative to the book folder.</li>
+<li>The importer must reject paths that escape the book folder after
+  normalization.</li>
+<li>This directory may be absent only when there are no local media references
+  and the importer will synthesize cover art during normalization.</li>
+</ul>
+<p><code>book.html</code></p>
+<ul>
+<li>Optional rich rendered source, currently produced by EPUB/PDF converters.</li>
+<li>The app may prefer Markdown rendering for consistency, or use <code>book.html</code>
+  when a converter preserves layout that Markdown cannot represent well.</li>
+<li>Any referenced media must still be local to the package.</li>
+</ul>
+<p><code>conversion_manifest.json</code></p>
+<ul>
+<li>Optional converter provenance, warnings, counts, source type, and source path
+  hints.</li>
+<li>The importer should store this as metadata but must not require it to render
+  or parse the book.</li>
+<li>Historical converter manifests may contain original machine paths as
+  provenance, such as <code>source_pdf</code>. These are not package asset paths. Importers
+  must ignore them for rendering and validation unless a field is explicitly
+  defined as a package-relative input, such as <code>source_epub_path</code>,
+  <code>output_files</code>, or <code>referenced_assets</code>.</li>
+</ul>
+<p><code>README.md</code></p>
+<ul>
+<li>Optional human-readable conversion note.</li>
+</ul>
+<p><code>original_epub/</code> and <code>original_pdf/</code></p>
+<ul>
+<li>Optional provenance only.</li>
+<li>Omit from normal app packages unless the user explicitly wants source-file
+  traceability; these files are large and not needed for reading.</li>
+</ul>
+<h2 id="existing-producers">Existing Producers<a class="headerlink" href="#existing-producers" title="Permanent link">¶</a></h2>
+<p>The package contract should track what these current scripts produce:</p>
+<table>
+<thead>
+<tr>
+<th>Producer</th>
+<th>Folder output</th>
+<th>Metadata and cover behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>scripts/convert_ebooks.py</code></td>
+<td><code>book.md</code>, <code>book.html</code>, <code>metadata.json</code>, <code>conversion_manifest.json</code>, <code>README.md</code>, <code>assets/</code>, <code>original_epub/</code></td>
+<td>Writes nested EPUB metadata, <code>source_epub</code>, <code>rootfile</code>, <code>spine_count</code>, <code>spine_paths</code>, <code>assets_count</code>, and <code>cover_image</code>. Cover selection uses the EPUB manifest cover, a scored asset, a front-matter image, or synthetic <code>assets/generated-cover.svg</code>.</td>
+</tr>
+<tr>
+<td><code>scripts/convert_manning_epubs.py</code></td>
+<td>Same core EPUB folder shape</td>
+<td>Writes the same core fields plus Manning nav/title-page diagnostics and optional render features. Writes <code>cover_image</code>.</td>
+</tr>
+<tr>
+<td><code>scripts/convert_pragprog_epubs.py</code></td>
+<td>Same core EPUB folder shape</td>
+<td>Writes the same core fields plus PragProg nav/title-page diagnostics. Writes <code>cover_image</code>.</td>
+</tr>
+<tr>
+<td><code>scripts/split_epub_collection.py</code></td>
+<td>Same core EPUB folder shape per split component</td>
+<td>Writes component metadata and <code>referenced_assets</code>, but the splitter itself does not choose <code>cover_image</code>. Current ingested split folders may have <code>cover_image</code> because ingestion backfilled a synthetic cover.</td>
+</tr>
+<tr>
+<td><code>scripts/convert_pdfs.py</code></td>
+<td><code>book.md</code>, <code>book.html</code>, <code>metadata.json</code>, <code>conversion_manifest.json</code>, <code>README.md</code>, <code>assets/</code>, <code>original_pdf/</code></td>
+<td>Writes top-level <code>title</code>, <code>creator</code>, <code>source_format: "pdf"</code>, <code>source_pdf</code>, nested PDF metadata, and <code>cover_image</code>. The conversion manifest uses PDF-specific stats such as <code>pages</code>, <code>chapters</code>, <code>images</code>, and <code>warnings</code>, not the EPUB manifest field names.</td>
+</tr>
+<tr>
+<td>Contract folders plus <code>scripts/ingest_contracts.py</code></td>
+<td>Existing contract folders can contain only <code>book.md</code>, <code>metadata.json</code>, and <code>assets/</code></td>
+<td>Contract ingestion uses the same cover backfill path as generic ingestion and parses Article/Section structure instead of generic book chapters.</td>
+</tr>
+</tbody>
+</table>
+<p><code>scripts/ingest_books.py</code> and <code>scripts/ingest_contracts.py</code> are normalizers as
+well as database importers. They load existing metadata, derive title and author
+from either nested EPUB metadata or top-level fields, create
+<code>assets/generated-cover.svg</code> when no valid cover exists, update
+<code>metadata.json</code>, and add a cover image to front matter when needed.</p>
+<h2 id="metadata-contract">Metadata Contract<a class="headerlink" href="#metadata-contract" title="Permanent link">¶</a></h2>
+<p>The current server accepts both nested EPUB-style metadata and top-level title
+fields. The iPad importer should accept those historical shapes and normalize
+them into one internal model.</p>
+<p>A typical existing EPUB <code>metadata.json</code> looks like this:</p>
+<pre><code class="language-json">{
+  &quot;source_epub&quot;: &quot;source.epub&quot;,
+  &quot;rootfile&quot;: &quot;OEBPS/content.opf&quot;,
+  &quot;metadata&quot;: {
+    &quot;title&quot;: &quot;Build a Large Language Model (From Scratch)&quot;,
+    &quot;creator&quot;: &quot;Sebastian Raschka&quot;,
+    &quot;publisher&quot;: &quot;Manning Publications Co.&quot;,
+    &quot;identifier&quot;: &quot;urn:isbn:9781633437166&quot;,
+    &quot;language&quot;: &quot;en-us&quot;,
+    &quot;date&quot;: &quot;2024-09-12&quot;
+  },
+  &quot;assets_count&quot;: 154,
+  &quot;cover_image&quot;: {
+    &quot;path&quot;: &quot;assets/Images/cover.jpg&quot;,
+    &quot;source&quot;: &quot;epub_manifest&quot;,
+    &quot;synthetic&quot;: false
+  }
+}
+</code></pre>
+<p>A typical existing PDF <code>metadata.json</code> uses top-level display fields:</p>
+<pre><code class="language-json">{
+  &quot;title&quot;: &quot;Data Engineering Design Patterns&quot;,
+  &quot;creator&quot;: &quot;Bartosz Konieczny&quot;,
+  &quot;source_format&quot;: &quot;pdf&quot;,
+  &quot;source_pdf&quot;: &quot;original_pdf/Data-Engineering-Design-Patterns-121525.pdf&quot;,
+  &quot;metadata&quot;: {
+    &quot;title&quot;: &quot;Data Engineering Design Patterns&quot;,
+    &quot;creator&quot;: &quot;Bartosz Konieczny&quot;,
+    &quot;pages&quot;: &quot;356&quot;
+  },
+  &quot;cover_image&quot;: {
+    &quot;path&quot;: &quot;assets/cover.jpg&quot;,
+    &quot;source&quot;: &quot;pdf-cover&quot;,
+    &quot;synthetic&quot;: false
+  }
+}
+</code></pre>
+<p>Normalized importer fields:</p>
+<ul>
+<li>Slug comes from the book folder name unless a future <code>slug</code> field is present.</li>
+<li>Collection comes from the surrounding import context or user-selected
+  destination collection. Current single-book folders do not reliably encode it.</li>
+<li>Display title is <code>metadata.title</code>, then top-level <code>title</code>, then the first
+  nonblank Markdown line, then the folder name.</li>
+<li>Author is <code>metadata.creator</code>, then top-level <code>creator</code>.</li>
+<li>Source kind is inferred from <code>source_format</code>, <code>source_pdf</code>, <code>source_epub</code>, or
+  <code>conversion_manifest.json</code>.</li>
+<li>Package metadata paths used as inputs, such as <code>metadata.source_pdf</code>,
+  <code>metadata.source_epub</code> after resolving under <code>original_epub/</code>, and
+  <code>metadata.cover_image.path</code>, must resolve inside the book folder. Original
+  machine paths may appear only in converter-provenance fields that the importer
+  does not use as package inputs.</li>
+<li>Parser mode defaults to <code>generic</code>; use <code>contract</code> only when explicitly chosen
+  by the import flow or metadata.</li>
+<li>Existing EPUB/PDF/vendor-specific fields such as <code>rootfile</code>, <code>source_epub</code>,
+  <code>spine_count</code>, <code>spine_paths</code>, <code>assets_count</code>, <code>component</code>, <code>render_features</code>,
+  <code>chapters</code>, <code>pages</code>, <code>warnings</code>, and publisher-specific diagnostics should be
+  preserved as opaque metadata.</li>
+</ul>
+<p>Do not require existing converters to emit <code>format</code>, <code>collection</code>, <code>source</code>, or
+<code>import</code> wrapper objects. Those may be added by a future <code>.crbook</code> packager, but
+they are not part of the historical folder contract.</p>
+<h2 id="cover-and-thumbnail-contract">Cover And Thumbnail Contract<a class="headerlink" href="#cover-and-thumbnail-contract" title="Permanent link">¶</a></h2>
+<p><code>metadata.cover_image</code> is the existing cover contract:</p>
+<pre><code class="language-json">{
+  &quot;path&quot;: &quot;assets/Images/cover.jpg&quot;,
+  &quot;source&quot;: &quot;epub_manifest&quot;,
+  &quot;synthetic&quot;: false
+}
+</code></pre>
+<ul>
+<li><code>path</code> is relative to the book folder and should point under <code>assets/</code>.</li>
+<li>Known <code>source</code> values include <code>epub_manifest</code>, <code>epub_asset</code>, <code>front_matter</code>,
+  <code>synthetic</code>, and <code>pdf-cover</code>.</li>
+<li><code>synthetic: true</code> means the cover was generated as
+  <code>assets/generated-cover.svg</code>.</li>
+<li>If <code>cover_image.path</code> is present, the importer should verify that the file
+  exists and is inside the package.</li>
+<li>If <code>cover_image.path</code> is missing or invalid, normalize the copied package by
+  creating <code>assets/generated-cover.svg</code>, updating stored metadata, and ensuring
+  the front matter contains a cover image.</li>
+</ul>
+<p>There is no separate historical <code>thumbnail</code> field. The current web app renders
+book-list thumbnails by using <code>metadata.cover_image.path</code> in a fixed-size cover
+slot. Some EPUBs include files named <code>thumb.jpg</code>, <code>thumbPPC.jpg</code>, or similar,
+but those are ordinary source assets unless <code>cover_image.path</code> points at them.</p>
+<p>An app may cache resized thumbnails for performance, but those thumbnails are
+derived app state and should live outside the portable book package.</p>
+<h2 id="collection-creation">Collection Creation<a class="headerlink" href="#collection-creation" title="Permanent link">¶</a></h2>
+<p>Collections are not first-class package contents today. They emerge from two
+server-side conventions:</p>
+<ul>
+<li>Converter scripts such as <code>scripts/convert_ebooks.py</code> and
+  <code>scripts/split_epub_collection.py</code> write collection-level <code>manifest.json</code> and
+  <code>manifest.tsv</code> beside a <code>&lt;collection&gt;/books/</code> folder.</li>
+<li>Ingestion derives <code>collection_slug</code> from the root path: if the root folder is
+  named <code>books</code>, the collection is the parent folder name; otherwise the root
+  folder name is used. <code>scripts/ingest_books.py --collection-slug</code> can override
+  that derived value.</li>
+</ul>
+<p>That side effect is enough for the server filesystem workflow, but it is not
+enough for the Apple apps. The app needs an explicit collection import route in
+the native bridge:</p>
+<ul>
+<li><code>library.importBook</code>: import one book package into a chosen or newly created
+  collection.</li>
+<li><code>library.importCollection</code>: import a package-set manifest or collection
+  archive, create/update the collection record, then import each member book.</li>
+</ul>
+<p><code>scripts/package_books.py</code> writes package-set <code>manifest.json</code> and <code>manifest.tsv</code>
+files under <code>dist/book_packages/</code>. Those generated manifests group archives by
+collection and are the initial contract for <code>library.importCollection</code>.
+Packaging can use <code>--collection-slug</code> when a package set needs an explicit
+collection identity instead of the slug inferred from the source folder.</p>
+<h2 id="markdown-rules">Markdown Rules<a class="headerlink" href="#markdown-rules" title="Permanent link">¶</a></h2>
+<p>The current generic parser should remain the default:</p>
+<ul>
+<li><code>#</code>, <code>##</code>, and <code>###</code> headings are chapter-boundary candidates.</li>
+<li>A Markdown table of contents with internal links can supply chapter titles.</li>
+<li>Numbered chapter headings and appendix/back-matter titles receive structural
+  roles during import.</li>
+<li>Block-level cells are derived by blank-line splitting, with special handling
+  for fenced code blocks and loose Markdown tables.</li>
+</ul>
+<p>Contract/legal documents are the known parser exception:</p>
+<ul>
+<li>Select <code>contract</code> when legal Articles or major Sections should become reader
+  chapters.</li>
+<li>The importer should not guess contract parsing solely from Markdown text when
+  metadata or the import flow supplies a parser choice.</li>
+</ul>
+<h2 id="derived-state">Derived State<a class="headerlink" href="#derived-state" title="Permanent link">¶</a></h2>
+<p>Do not include these in the book package:</p>
+<ul>
+<li><code>close_reading.sqlite</code> or SQLite sidecar files.</li>
+<li>Search index rows.</li>
+<li>AI traces, AI interactions, chapter summaries, prompt presets, tags, notes,
+  highlights, annotations, or exports.</li>
+</ul>
+<p>Those are reader state, not book source state. A future export/import format for
+reader state should be separate from the book package and keyed by content
+hashes plus stable cell locators.</p>
+<h2 id="import-validation">Import Validation<a class="headerlink" href="#import-validation" title="Permanent link">¶</a></h2>
+<p>The iPad importer should:</p>
+<ol>
+<li>Open <code>.crbook</code> or <code>.zip</code> with a document picker or share target.</li>
+<li>Reject archives with no <code>book.md</code>, multiple unrelated <code>book.md</code> roots, or
+   unsafe paths such as absolute paths, <code>..</code>, and symlinks. Ignore harmless ZIP
+   cruft such as <code>__MACOSX/</code> and <code>.DS_Store</code>.</li>
+<li>Decode <code>book.md</code> as UTF-8 and parse <code>metadata.json</code> when present.</li>
+<li>Normalize slug, title, author, collection slug, cover path, source kind, and
+   parser mode.</li>
+<li>Verify that every local asset referenced by Markdown, HTML, or
+   <code>metadata.cover_image.path</code> exists. Remote media references should warn
+   because the iPad package is intended to be offline-readable.</li>
+<li>Ensure a valid cover exists, synthesizing <code>assets/generated-cover.svg</code> and
+   front-matter cover Markdown when needed.</li>
+<li>Copy the package into the app sandbox using an internal immutable package
+   directory keyed by slug plus content hash.</li>
+<li>Store only the selected package filename as import provenance. Do not store
+   the document-picker URL, security-scoped URL, staging URL, simulator path, or
+   application-container path in SQLite.</li>
+<li>Parse chapters and cells using the same logic as the server app or a tested
+   port of that logic.</li>
+<li>Store derived books, chapters, cells, locators, content hashes, and search
+   rows in the local iPad database.</li>
+<li>On slug conflicts, offer Replace, Keep Both, or Cancel. Replace should warn
+   that local reader state may detach if chapter/cell hashes changed.</li>
+</ol>
+<h2 id="executable-checks">Executable Checks<a class="headerlink" href="#executable-checks" title="Permanent link">¶</a></h2>
+<p><code>scripts/lint_books.py</code> is the general executable linter for book folders. Use
+it before ingestion, deployment, package generation, and app bundling:</p>
+<pre><code class="language-bash">just lint-books data/books
+</code></pre>
+<p><code>scripts/package_books.py</code> runs the same lint contract before writing archives:</p>
+<pre><code class="language-bash">just package-books data/books dist/book_packages crbook
+</code></pre>
+<p>The generated <code>.crbook</code> files are ZIP files with a branded extension. The
+package target also writes <code>dist/book_packages/manifest.json</code> and
+<code>dist/book_packages/manifest.tsv</code> so a future app route can import a collection
+or package set explicitly. The target passes extra script flags through after
+the extension, for example:</p>
+<pre><code class="language-bash">just package-books sample_collections/gutenberg_tiny/books dist/gutenberg_seed_packages crbook --collection-slug Gutenberg_Tiny
+</code></pre>
+<p><code>tests/test_ipad_book_package_spec.py</code> validates the committed Gutenberg sample
+books and opportunistically validates the ignored local <code>data/books</code> corpus when
+it exists. <code>tests/test_book_package_tools.py</code> covers the linter and packager
+behavior directly. These checks cover required files, UTF-8/JSON readability,
+title compatibility, in-bundle cover paths, Markdown/HTML asset references,
+split-EPUB <code>referenced_assets</code>, the absence of a separate historical thumbnail
+metadata field, and current producer variants when the local corpus is present.</p>
+<h2 id="acceptance-criteria">Acceptance Criteria<a class="headerlink" href="#acceptance-criteria" title="Permanent link">¶</a></h2>
+<ul>
+<li>A ZIP of any current normalized <code>data/books/&lt;collection&gt;/&lt;book_slug&gt;/</code> folder
+  with <code>book.md</code>, <code>metadata.json</code>, and referenced local assets imports without
+  server access.</li>
+<li>A ZIP of raw <code>scripts/split_epub_collection.py</code> output imports after the app
+  synthesizes missing cover metadata.</li>
+<li>The importer preserves relative asset links and never requires absolute local
+  paths.</li>
+<li>Import history contains a portable filename, never a Files-provider,
+  security-scoped, staging, simulator, or container absolute path.</li>
+<li><code>metadata.cover_image.path</code> drives the book-list thumbnail. No separate
+  package thumbnail is required.</li>
+<li>Contract packages can select contract-aware parsing explicitly through import
+  UI or metadata.</li>
+<li>Reader-generated state remains outside the book package.</li>
+<li>A future package generator can emit <code>.crbook</code> files without changing the
+  current server ingestion folder shape.</li>
+</ul>
+<h2 id="open-questions">Open Questions<a class="headerlink" href="#open-questions" title="Permanent link">¶</a></h2>
+<ul>
+<li>Should <code>.crbook</code> be a renamed <code>.zip</code> only, or should it eventually require a
+  custom UTI and top-level <code>close-reading-package.json</code> manifest?</li>
+<li>Should collection import be supported in the first iPad release, or should the
+  app only import one book at a time?</li>
+<li>Should <code>book.html</code> remain a first-class display source, or should iPad always
+  render Markdown and use HTML only as provenance?</li>
+<li>Should a future <code>.crbook</code> packager add optional normalized <code>format</code>,
+  <code>collection</code>, <code>source</code>, and <code>import</code> objects, or should those remain importer
+  database fields only?</li>
+<li>Should reader state export/import be designed before the iPad app ships, or
+  deferred until after single-device reading works?</li>
+</ul>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">¶</a></h2>
+<ul>
+<li>Existing server docs: <code>docs/ebook-workflows.md</code></li>
+<li>Current generic ingester: <code>scripts/ingest_books.py</code></li>
+<li>Current contract ingester: <code>scripts/ingest_contracts.py</code></li>
+<li>Current EPUB converters: <code>scripts/convert_ebooks.py</code>,
+  <code>scripts/convert_manning_epubs.py</code>, <code>scripts/convert_pragprog_epubs.py</code>,
+  <code>scripts/split_epub_collection.py</code></li>
+<li>Current PDF converter: <code>scripts/convert_pdfs.py</code></li>
+<li>Current parser: <code>app/splitter.py</code></li>
+<li>Current database schema: <code>app/db.py</code></li>
+</ul>
+      </article>
+    </div>
+  </main>
+
+  <footer>
+    <p>This rendered page and its <a href="../crbook-spec.md">Markdown copy</a> come from the canonical package contract maintained in <code>close_reading</code>.</p>
+    <p><a href="../">Browse CRBooks</a> · Source SHA-256 <code>db64a0d7d723</code></p>
+  </footer>
+</body>
+</html>
