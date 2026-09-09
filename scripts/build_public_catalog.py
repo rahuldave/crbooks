@@ -12,8 +12,11 @@ import shutil
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
-from urllib.parse import quote
+from urllib.parse import quote, urlparse
 
+from markdown import Markdown
+from markdown.extensions import Extension
+from markdown.treeprocessors import Treeprocessor
 from PIL import Image, ImageOps
 
 ALLOWED_COLLECTIONS = {
@@ -37,6 +40,33 @@ CATALOG_FIELDS = {
     "epub_url",
     "selection_note",
 }
+
+
+class PublicSpecLinkTreeprocessor(Treeprocessor):
+    """Prevent private relative references from becoming broken public links."""
+
+    def run(self, root: Any) -> Any:
+        for element in root.iter("a"):
+            value = element.get("href")
+            if value and not value.startswith(("#", "//")) and not urlparse(value).scheme:
+                element.tag = "span"
+                element.attrib = {"class": "source-reference"}
+        for element in root.iter("img"):
+            value = element.get("src")
+            if value and not urlparse(value).scheme and not value.startswith("//"):
+                raise ValueError(
+                    "CRBook spec contains a relative image that is not public-site content"
+                )
+        return root
+
+
+class PublicSpecLinkExtension(Extension):
+    def extendMarkdown(self, md: Markdown) -> None:  # noqa: N802
+        md.treeprocessors.register(
+            PublicSpecLinkTreeprocessor(md),
+            "public_spec_links",
+            0,
+        )
 
 
 @dataclass(frozen=True)
@@ -186,6 +216,114 @@ def render_card(book: dict[str, Any], index: int) -> str:
       </article>"""
 
 
+def extract_markdown_title(markdown_text: str) -> tuple[str, str]:
+    lines = markdown_text.splitlines()
+    for index, line in enumerate(lines):
+        if line.startswith("# "):
+            title = line[2:].strip()
+            if not title:
+                break
+            body = "\n".join([*lines[:index], *lines[index + 1 :]]).lstrip()
+            return title, body
+    raise ValueError("CRBook spec must contain a level-one Markdown title")
+
+
+def render_spec(markdown_text: str, *, source_sha256: str) -> str:
+    title, markdown_body = extract_markdown_title(markdown_text)
+    display_title = title.removeprefix("Spec:").strip()
+    converter = Markdown(
+        extensions=[
+            "extra",
+            "sane_lists",
+            "toc",
+            PublicSpecLinkExtension(),
+        ],
+        extension_configs={
+            "toc": {
+                "permalink": "¶",
+                "permalink_title": "Permanent link",
+            }
+        },
+    )
+    rendered_body = converter.convert(markdown_body)
+    toc = converter.toc
+    escaped_digest = html.escape(source_sha256)
+    return f"""<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="The open specification for portable CRBook reading packages.">
+  <title>{html.escape(display_title)} · CRBooks</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="spec-page">
+  <header class="spec-hero">
+    <nav class="topbar" aria-label="Primary">
+      <a class="wordmark" href="../">CRBooks</a>
+      <div>
+        <a href="./" aria-current="page">Format spec</a>
+        <a href="../catalog.json">Catalog JSON</a>
+        <a href="https://github.com/rahuldave/crbooks">GitHub</a>
+      </div>
+    </nav>
+    <div class="spec-hero-copy">
+      <p class="eyebrow">Open format specification</p>
+      <h1>{html.escape(display_title)}</h1>
+      <p class="spec-lede">The portable, offline package contract used by the Close Reading reader. This page is generated directly from the canonical Markdown in the <code>close_reading</code> repository.</p>
+      <div class="spec-actions">
+        <a class="spec-action-primary" href="../crbook-spec.md">View source Markdown</a>
+        <a href="../">Browse the catalog</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="spec-main">
+    <div class="spec-layout">
+      <aside class="spec-sidebar">
+        <nav class="spec-toc" aria-label="Specification contents">
+          <p>On this page</p>
+          {toc}
+        </nav>
+      </aside>
+      <article class="spec-content">
+        {rendered_body}
+      </article>
+    </div>
+  </main>
+
+  <footer>
+    <p>This rendered page and its <a href="../crbook-spec.md">Markdown copy</a> come from the canonical package contract maintained in <code>close_reading</code>.</p>
+    <p><a href="../">Browse CRBooks</a> · Source SHA-256 <code>{escaped_digest[:12]}</code></p>
+  </footer>
+</body>
+</html>
+"""
+
+
+def publish_spec(*, source_path: Path, output_root: Path) -> dict[str, str]:
+    source_bytes = source_path.read_bytes()
+    markdown_text = source_bytes.decode("utf-8")
+    source_sha256 = hashlib.sha256(source_bytes).hexdigest()
+    markdown_path = output_root / "crbook-spec.md"
+    markdown_path.write_bytes(source_bytes)
+    spec_root = output_root / "spec"
+    spec_root.mkdir(parents=True)
+    (spec_root / "index.html").write_text(
+        render_spec(
+            markdown_text,
+            source_sha256=source_sha256,
+        ),
+        encoding="utf-8",
+    )
+    return {
+        "format": "crbook-package-spec",
+        "url": "spec/",
+        "markdown_url": "crbook-spec.md",
+        "sha256": source_sha256,
+    }
+
+
 def render_index(manifest: dict[str, Any]) -> str:
     books = manifest["books"]
     categories = manifest["categories"]
@@ -209,6 +347,7 @@ def render_index(manifest: dict[str, Any]) -> str:
     <nav class="topbar" aria-label="Primary">
       <a class="wordmark" href="./">CRBooks</a>
       <div>
+        <a href="spec/">Format spec</a>
         <a href="catalog.json">Catalog JSON</a>
         <a href="https://github.com/{html.escape(manifest["repository"])}">GitHub</a>
       </div>
@@ -248,7 +387,7 @@ def render_index(manifest: dict[str, Any]) -> str:
   </main>
 
   <footer>
-    <p>CRBook packages are ZIP-compatible reading bundles. The books are public-domain Project Gutenberg editions; availability and rights may differ outside the United States.</p>
+    <p>CRBook packages are ZIP-compatible reading bundles described by the open <a href="spec/">format specification</a>. The books are public-domain Project Gutenberg editions; availability and rights may differ outside the United States.</p>
     <p>Release <a href="https://github.com/{html.escape(manifest["repository"])}/releases/tag/{html.escape(manifest["release_tag"])}">{html.escape(manifest["release_tag"])}</a> · <a href="catalog.json">checksums and metadata</a></p>
   </footer>
   <script src="app.js" defer></script>
@@ -266,6 +405,7 @@ def build_catalog(
     release_tag: str,
     output_root: Path,
     site_root: Path,
+    spec_source_path: Path,
 ) -> dict[str, Any]:
     books = load_catalog(catalog_path)
     package_manifest_path = package_root / "manifest.json"
@@ -281,6 +421,10 @@ def build_catalog(
     if output_root.exists():
         shutil.rmtree(output_root)
     output_root.mkdir(parents=True)
+    spec = publish_spec(
+        source_path=spec_source_path,
+        output_root=output_root,
+    )
     covers_root = output_root / "covers"
     public_books: list[dict[str, Any]] = []
     seen_assets: set[str] = set()
@@ -339,6 +483,7 @@ def build_catalog(
         "book_count": len(public_books),
         "total_bytes": total_bytes,
         "total_size": format_bytes(total_bytes),
+        "spec": spec,
         "categories": categories,
         "books": public_books,
     }
@@ -397,6 +542,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--release-tag", required=True)
     parser.add_argument("--output-root", type=Path, default=Path("docs"))
     parser.add_argument("--site-root", type=Path, default=Path("site"))
+    parser.add_argument(
+        "--spec-source",
+        type=Path,
+        default=Path("../close_reading/internal_docs/ipad_book_package_spec.md"),
+    )
     return parser.parse_args()
 
 
@@ -410,6 +560,7 @@ def main() -> int:
         release_tag=args.release_tag,
         output_root=args.output_root.resolve(),
         site_root=args.site_root.resolve(),
+        spec_source_path=args.spec_source.resolve(),
     )
     print(
         f"Built {manifest['book_count']} books in {len(manifest['categories'])} collections "

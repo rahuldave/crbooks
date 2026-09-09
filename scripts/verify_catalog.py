@@ -18,6 +18,19 @@ def verify_catalog(catalog_path: Path, package_root: Path) -> dict[str, int]:
         errors.append(f"expected {EXPECTED_BOOK_COUNT} books, found {len(books)}")
     if catalog.get("book_count") != len(books):
         errors.append("book_count does not match books")
+
+    spec = catalog.get("spec")
+    if not isinstance(spec, dict):
+        errors.append("catalog does not declare the CRBook format spec")
+    else:
+        markdown_path = catalog_path.parent / str(spec.get("markdown_url", ""))
+        html_path = catalog_path.parent / str(spec.get("url", "")) / "index.html"
+        if not markdown_path.is_file():
+            errors.append("catalog CRBook spec Markdown is missing")
+        elif sha256_file(markdown_path) != spec.get("sha256"):
+            errors.append("catalog CRBook spec Markdown checksum does not match")
+        if not html_path.is_file():
+            errors.append("catalog CRBook spec HTML is missing")
     if len({book.get("slug") for book in books}) != len(books):
         errors.append("book slugs are not unique")
     if {book.get("collection_slug") for book in books} - ALLOWED_COLLECTIONS:
