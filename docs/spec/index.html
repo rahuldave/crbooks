@@ -432,6 +432,13 @@ it before ingestion, deployment, package generation, and app bundling:</p>
 <p><code>scripts/package_books.py</code> runs the same lint contract before writing archives:</p>
 <pre><code class="language-bash">just package-books data/books dist/book_packages crbook
 </code></pre>
+<p>The lint must parse Markdown image nodes rather than relying on a flat regular
+expression. It rejects fragment-only image targets, including nested labels
+such as <code>![[T]](#Footnote_T_20)</code>, and rejects rendered HTML images whose <code>src</code>
+is a document fragment. These forms indicate that literal <code>!</code> punctuation was
+joined to a generated footnote link. Producers must escape the punctuation
+(<code>\!</code>) so the visible sentence and note link are preserved without creating an
+image node.</p>
 <p>The generated <code>.crbook</code> files are ZIP files with a branded extension. The
 package target also writes <code>dist/book_packages/manifest.json</code> and
 <code>dist/book_packages/manifest.tsv</code> so a future app route can import a collection
@@ -497,7 +504,7 @@ metadata field, and current producer variants when the local corpus is present.<
 
   <footer>
     <p>This rendered page and its <a href="../crbook-spec.md">Markdown copy</a> come from the canonical package contract maintained in <code>close_reading</code>.</p>
-    <p><a href="../">Browse CRBooks</a> · Source SHA-256 <code>db64a0d7d723</code></p>
+    <p><a href="../">Browse CRBooks</a> · Source SHA-256 <code>09ec3159fdc6</code></p>
   </footer>
 </body>
 </html>
