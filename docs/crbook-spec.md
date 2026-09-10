@@ -389,6 +389,14 @@ just lint-books data/books
 just package-books data/books dist/book_packages crbook
 ```
 
+The lint must parse Markdown image nodes rather than relying on a flat regular
+expression. It rejects fragment-only image targets, including nested labels
+such as `![[T]](#Footnote_T_20)`, and rejects rendered HTML images whose `src`
+is a document fragment. These forms indicate that literal `!` punctuation was
+joined to a generated footnote link. Producers must escape the punctuation
+(`\!`) so the visible sentence and note link are preserved without creating an
+image node.
+
 The generated `.crbook` files are ZIP files with a branded extension. The
 package target also writes `dist/book_packages/manifest.json` and
 `dist/book_packages/manifest.tsv` so a future app route can import a collection
