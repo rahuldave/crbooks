@@ -1133,6 +1133,7 @@
     }
   ],
   "format": "public-crbook-catalog",
+  "release_published_at": "2026-09-16T20:45:41Z",
   "release_tag": "crbooks-2026-09-16",
   "repository": "rahuldave/crbooks",
   "spec": {

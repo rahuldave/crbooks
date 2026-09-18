@@ -54,6 +54,8 @@ a { color: inherit; }
 .hero h1 { margin: 0; font: 400 clamp(4rem, 9vw, 8.5rem)/0.88 "Libre Caslon Display", Georgia, serif; letter-spacing: -0.045em; }
 .hero h1 em { color: #eacb9e; font-weight: 400; }
 .lede { max-width: 710px; margin: 34px 0 0; font-size: clamp(1.02rem, 2vw, 1.28rem); line-height: 1.65; color: rgba(255, 253, 247, 0.78); }
+.release-note { margin: 18px 0 0; color: rgba(255, 253, 247, 0.64); font-size: 0.84rem; letter-spacing: 0.02em; }
+.release-note time { color: #eacb9e; }
 
 .stats { margin: 0; display: flex; gap: clamp(30px, 6vw, 90px); }
 .stats div { display: grid; }

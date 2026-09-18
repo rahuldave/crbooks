@@ -10,7 +10,9 @@ from PIL import Image
 
 from scripts.build_public_catalog import (
     Book,
+    format_release_date,
     load_catalog,
+    normalize_release_published_at,
     publish_spec,
     release_asset_url,
     render_index,
@@ -42,6 +44,13 @@ def test_release_asset_url_is_versioned_and_direct() -> None:
     assert release_asset_url("rahuldave/crbooks", "crbooks-2026-09-04", "43_jekyll.crbook") == (
         "https://github.com/rahuldave/crbooks/releases/download/crbooks-2026-09-04/43_jekyll.crbook"
     )
+
+
+def test_release_published_at_is_timezone_aware_and_normalized() -> None:
+    assert normalize_release_published_at("2026-09-16T16:45:41-04:00") == "2026-09-16T20:45:41Z"
+    assert format_release_date("2026-09-16T20:45:41Z") == "September 16, 2026"
+    with pytest.raises(ValueError, match="timezone"):
+        normalize_release_published_at("2026-09-16T20:45:41")
 
 
 def test_catalog_rejects_tiny_and_private_collections(tmp_path: Path) -> None:
@@ -115,6 +124,7 @@ def test_local_verifier_checks_archive_and_cover(tmp_path: Path) -> None:
             {
                 "repository": "example/crbooks",
                 "release_tag": "v1",
+                "release_published_at": "2026-09-16T20:45:41Z",
                 "book_count": 61,
                 "total_bytes": total_bytes,
                 "spec": {
@@ -201,8 +211,12 @@ def test_catalog_navigation_links_to_format_spec() -> None:
             "total_size": "0 B",
             "repository": "example/crbooks",
             "release_tag": "v1",
+            "release_published_at": "2026-09-16T20:45:41Z",
         }
     )
 
     assert '<a href="spec/">Format spec</a>' in rendered
     assert '<a href="spec/">format specification</a>' in rendered
+    assert (
+        'Latest package upload: <time datetime="2026-09-16T20:45:41Z">September 16, 2026</time>'
+    ) in rendered
