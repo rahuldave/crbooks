@@ -9,7 +9,6 @@ from pathlib import Path
 
 from scripts.build_public_catalog import (
     ALLOWED_COLLECTIONS,
-    EXPECTED_BOOK_COUNT,
     normalize_release_published_at,
     sha256_file,
 )
@@ -19,8 +18,8 @@ def verify_catalog(catalog_path: Path, package_root: Path) -> dict[str, int]:
     catalog = json.loads(catalog_path.read_text(encoding="utf-8"))
     books = catalog.get("books", [])
     errors: list[str] = []
-    if len(books) != EXPECTED_BOOK_COUNT:
-        errors.append(f"expected {EXPECTED_BOOK_COUNT} books, found {len(books)}")
+    if not books:
+        errors.append("catalog does not contain any books")
     if catalog.get("book_count") != len(books):
         errors.append("book_count does not match books")
     try:
@@ -50,7 +49,17 @@ def verify_catalog(catalog_path: Path, package_root: Path) -> dict[str, int]:
         errors.append("catalog contains non-English books")
 
     checked_bytes = 0
+    uploaded_at_values: list[str] = []
     for book in books:
+        try:
+            uploaded_at = str(book["uploaded_at"])
+            if normalize_release_published_at(uploaded_at) != uploaded_at:
+                errors.append(f"uploaded_at is not normalized UTC: {book['slug']}")
+            uploaded_at_values.append(uploaded_at)
+        except (KeyError, ValueError):
+            errors.append(f"book does not declare a valid uploaded_at: {book['slug']}")
+        if not book.get("release_tag"):
+            errors.append(f"book does not declare a release_tag: {book['slug']}")
         package = package_root / str(book["collection_slug"]) / str(book["asset_name"])
         if not package.is_file():
             errors.append(f"missing package: {package}")
@@ -62,12 +71,24 @@ def verify_catalog(catalog_path: Path, package_root: Path) -> dict[str, int]:
             errors.append(f"checksum mismatch: {book['slug']}")
         expected_url = (
             f"https://github.com/{catalog['repository']}/releases/download/"
-            f"{catalog['release_tag']}/{book['asset_name']}"
+            f"{book.get('release_tag')}/{book['asset_name']}"
         )
         if book["download_url"] != expected_url:
             errors.append(f"download URL mismatch: {book['slug']}")
         if not (catalog_path.parent / book["cover_url"]).is_file():
             errors.append(f"missing cover thumbnail: {book['slug']}")
+
+    if uploaded_at_values:
+        latest_uploaded_at = max(uploaded_at_values)
+        latest_tags = {
+            book.get("release_tag")
+            for book in books
+            if book.get("uploaded_at") == latest_uploaded_at
+        }
+        if catalog.get("release_published_at") != latest_uploaded_at:
+            errors.append("release_published_at is not the latest per-book upload")
+        if len(latest_tags) != 1 or catalog.get("release_tag") not in latest_tags:
+            errors.append("release_tag does not identify the latest per-book upload")
 
     if checked_bytes != catalog.get("total_bytes"):
         errors.append("total_bytes does not match local package bytes")
