@@ -54,8 +54,19 @@ a { color: inherit; }
 .hero h1 { margin: 0; font: 400 clamp(4rem, 9vw, 8.5rem)/0.88 "Libre Caslon Display", Georgia, serif; letter-spacing: -0.045em; }
 .hero h1 em { color: #eacb9e; font-weight: 400; }
 .lede { max-width: 710px; margin: 34px 0 0; font-size: clamp(1.02rem, 2vw, 1.28rem); line-height: 1.65; color: rgba(255, 253, 247, 0.78); }
-.release-note { margin: 18px 0 0; color: rgba(255, 253, 247, 0.64); font-size: 0.84rem; letter-spacing: 0.02em; }
-.release-note time { color: #eacb9e; }
+.release-note {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin: 24px 0 0;
+  padding: 11px 15px;
+  border: 1px solid rgba(234, 203, 158, 0.52);
+  border-radius: 999px;
+  background: rgba(255, 253, 247, 0.1);
+  box-shadow: 0 8px 30px rgba(5, 25, 16, 0.18);
+}
+.release-note span { color: rgba(255, 253, 247, 0.84); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.11em; text-transform: uppercase; }
+.release-note time { color: #f3d2a3; font-size: 1rem; font-weight: 700; font-variant-numeric: tabular-nums; }
 
 .stats { margin: 0; display: flex; gap: clamp(30px, 6vw, 90px); }
 .stats div { display: grid; }
@@ -103,7 +114,10 @@ main { max-width: 1500px; margin: 0 auto; padding: 94px max(4vw, 24px) 120px; }
 .book-copy { padding: 20px 2px 0; }
 .category-label { margin: 0 0 9px; color: var(--rust); font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.09em; }
 .book-card h3 { margin: 0; font: 400 1.56rem/1.08 "Libre Caslon Display", Georgia, serif; }
-.author { min-height: 2.6em; margin: 8px 0 18px; color: var(--muted); font-size: 0.88rem; line-height: 1.45; }
+.author { min-height: 2.6em; margin: 8px 0 10px; color: var(--muted); font-size: 0.88rem; line-height: 1.45; }
+.upload-date { margin: 0 0 17px; color: var(--muted); font-size: 0.74rem; line-height: 1.4; }
+.upload-date span { color: var(--ink); font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+.upload-date time { color: var(--rust); font-weight: 600; }
 .card-actions { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 12px; }
 .download { display: flex; justify-content: space-between; gap: 10px; padding: 11px 13px; color: var(--white); background: var(--green); text-decoration: none; font-size: 0.78rem; font-weight: 600; }
 .download:hover { background: var(--rust); }
@@ -186,4 +200,5 @@ footer p { max-width: 620px; }
 @media (max-width: 430px) {
   .book-grid { grid-template-columns: 1fr; }
   .hero h1 { font-size: 3.6rem; }
+  .release-note { align-items: flex-start; flex-direction: column; gap: 4px; border-radius: 14px; }
 }

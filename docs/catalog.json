@@ -11,13 +11,15 @@
       "download_url": "https://github.com/rahuldave/crbooks/releases/download/crbooks-2026-09-16/43_the_strange_case_of_dr_jekyll_and_mr_hyde.crbook",
       "gutenberg_id": 43,
       "language": "en",
+      "release_tag": "crbooks-2026-09-16",
       "selection_note": "Compact novella; pin text record 43 over alternate record 42.",
       "sha256": "39124f60d223697a4a23987791c6d70363d4c605f658d426deec9360b13d3ca9",
       "size": "630.9 KB",
       "slug": "43_the_strange_case_of_dr_jekyll_and_mr_hyde",
       "source_epub_url": "https://www.gutenberg.org/ebooks/43.epub3.images",
       "source_url": "https://www.gutenberg.org/ebooks/43",
-      "title": "The Strange Case of Dr. Jekyll and Mr. Hyde"
+      "title": "The Strange Case of Dr. Jekyll and Mr. Hyde",
+      "uploaded_at": "2026-09-16T20:45:41Z"
     },
     {
       "asset_name": "209_the_turn_of_the_screw.crbook",
@@ -29,13 +31,15 @@
       "download_url": "https://github.com/rahuldave/crbooks/releases/download/crbooks-2026-09-16/209_the_turn_of_the_screw.crbook",
       "gutenberg_id": 209,
       "language": "en",
+      "release_tag": "crbooks-2026-09-16",
       "selection_note": "Compact novella with a frame narrative.",
       "sha256": "8ac4f84ef990e936da8f62e7d84185a29d9582b85366d5ffcd947c7311388388",
       "size": "793.9 KB",
       "slug": "209_the_turn_of_the_screw",
       "source_epub_url": "https://www.gutenberg.org/ebooks/209.epub3.images",
       "source_url": "https://www.gutenberg.org/ebooks/209",
-      "title": "The Turn of the Screw"
+      "title": "The Turn of the Screw",
+      "uploaded_at": "2026-09-16T20:45:41Z"
     },
     {
       "asset_name": "1063_the_cask_of_amontillado.crbook",
@@ -47,13 +51,15 @@
       "download_url": "https://github.com/rahuldave/crbooks/releases/download/crbooks-2026-09-16/1063_the_cask_of_amontillado.crbook",
       "gutenberg_id": 1063,
       "language": "en",
+      "release_tag": "crbooks-2026-09-16",
       "selection_note": "Short-story boundary case.",
       "sha256": "7e57d4f6ed66f77d6208ee0cfdbd0bebdf278a5e62f47ef207fd656b2e9af7a2",
       "size": "145.1 KB",
       "slug": "1063_the_cask_of_amontillado",
       "source_epub_url": "https://www.gutenberg.org/ebooks/1063.epub3.images",
       "source_url": "https://www.gutenberg.org/ebooks/1063",
-      "title": "The Cask of Amontillado"
+      "title": "The Cask of Amontillado",
+      "uploaded_at": "2026-09-16T20:45:41Z"
     },
     {
       "asset_name": "174_the_picture_of_dorian_gray.crbook",
@@ -65,13 +71,15 @@
       "download_url": "https://github.com/rahuldave/crbooks/releases/download/crbooks-2026-09-16/174_the_picture_of_dorian_gray.crbook",
       "gutenberg_id": 174,
       "language": "en",
+      "release_tag": "crbooks-2026-09-16",
       "selection_note": "Short canonical novel.",
       "sha256": "771a53f08131ca5bbe2c3652a29bb98f7d9ba8e0831648ad59bdb79d605c249b",
       "size": "972.5 KB",
       "slug": "174_the_picture_of_dorian_gray",
       "source_epub_url": "https://www.gutenberg.org/ebooks/174.epub3.images",
       "source_url": "https://www.gutenberg.org/ebooks/174",
-      "title": "The Picture of Dorian Gray"
+      "title": "The Picture of Dorian Gray",
+      "uploaded_at": "2026-09-16T20:45:41Z"
     },
     {
       "asset_name": "32_herland.crbook",
@@ -83,13 +91,15 @@
       "download_url": "https://github.com/rahuldave/crbooks/releases/download/crbooks-2026-09-16/32_herland.crbook",
       "gutenberg_id": 32,
       "language": "en",
+      "release_tag": "crbooks-2026-09-16",
       "selection_note": "Short speculative novel.",
       "sha256": "d2b1dd4af84737f8debcc41c7fa7cd8176bd4a3332dffe6ea8d7e921448e1a4e",
       "size": "461.7 KB",
       "slug": "32_herland",
       "source_epub_url": "https://www.gutenberg.org/ebooks/32.epub3.images",
       "source_url": "https://www.gutenberg.org/ebooks/32",
-      "title": "Herland"
+      "title": "Herland",
+      "uploaded_at": "2026-09-16T20:45:41Z"
     },
     {
       "asset_name": "159_the_island_of_doctor_moreau.crbook",
@@ -101,13 +111,15 @@
       "download_url": "https://github.com/rahuldave/crbooks/releases/download/crbooks-2026-09-16/159_the_island_of_doctor_moreau.crbook",
       "gutenberg_id": 159,
       "language": "en",
+      "release_tag": "crbooks-2026-09-16",
       "selection_note": "Short speculative novel.",
       "sha256": "4b36bc9f17f6ba5363db151bd0003e992321bf522d02ac0e096b34fc55a98d45",
       "size": "823.2 KB",
       "slug": "159_the_island_of_doctor_moreau",
       "source_epub_url": "https://www.gutenberg.org/ebooks/159.epub3.images",
       "source_url": "https://www.gutenberg.org/ebooks/159",
-      "title": "The Island of Doctor Moreau"
+      "title": "The Island of Doctor Moreau",
+      "uploaded_at": "2026-09-16T20:45:41Z"
     },
     {
       "asset_name": "64317_the_great_gatsby.crbook",
@@ -119,13 +131,15 @@
       "download_url": "https://github.com/rahuldave/crbooks/releases/download/crbooks-2026-09-16/64317_the_great_gatsby.crbook",
       "gutenberg_id": 64317,
       "language": "en",
+      "release_tag": "crbooks-2026-09-16",
       "selection_note": "Compact twentieth-century novel; US public-domain record.",
       "sha256": "09d74b829269a3c2f368d3aad9ba929623770b3344cd6a83b0e54cfa5ed4b22b",
       "size": "790.3 KB",
       "slug": "64317_the_great_gatsby",
       "source_epub_url": "https://www.gutenberg.org/ebooks/64317.epub3.images",
       "source_url": "https://www.gutenberg.org/ebooks/64317",
-      "title": "The Great Gatsby"
+      "title": "The Great Gatsby",
+      "uploaded_at": "2026-09-16T20:45:41Z"
     },
     {
       "asset_name": "1342_pride_and_prejudice.crbook",
@@ -137,13 +151,15 @@
       "download_url": "https://github.com/rahuldave/crbooks/releases/download/crbooks-2026-09-16/1342_pride_and_prejudice.crbook",
       "gutenberg_id": 1342,
       "language": "en",
+      "release_tag": "crbooks-2026-09-16",
       "selection_note": "Pin the established record 1342 over alternate editions.",
       "sha256": "de60ed65afc0bc41476fa872b679d10bdd0ed769283881a742d92e70c37dc570",
       "size": "46.8 MB",
       "slug": "1342_pride_and_prejudice",
       "source_epub_url": "https://www.gutenberg.org/ebooks/1342.epub3.images",
       "source_url": "https://www.gutenberg.org/ebooks/1342",
-      "title": "Pride and Prejudice"
+      "title": "Pride and Prejudice",
+      "uploaded_at": "2026-09-16T20:45:41Z"
     },
     {
       "asset_name": "41445_frankenstein_1818.crbook",
@@ -155,13 +171,15 @@
       "download_url": "https://github.com/rahuldave/crbooks/releases/download/crbooks-2026-09-16/41445_frankenstein_1818.crbook",
       "gutenberg_id": 41445,
       "language": "en",
+      "release_tag": "crbooks-2026-09-16",
       "selection_note": "Improved 1818 first edition; chosen over records 84 and 42324.",
       "sha256": "88ad26ba0f54b3f0edd36de2d7881209285296d092de983f19dd5347f7dae41a",
       "size": "759.9 KB",
       "slug": "41445_frankenstein_1818",
       "source_epub_url": "https://www.gutenberg.org/ebooks/41445.epub3.images",
       "source_url": "https://www.gutenberg.org/ebooks/41445",
-      "title": "Frankenstein; Or, The Modern Prometheus"
+      "title": "Frankenstein; Or, The Modern Prometheus",
+      "uploaded_at": "2026-09-16T20:45:41Z"
     },
     {
       "asset_name": "345_dracula.crbook",
@@ -173,13 +191,15 @@
       "download_url": "https://github.com/rahuldave/crbooks/releases/download/crbooks-2026-09-16/345_dracula.crbook",
       "gutenberg_id": 345,
       "language": "en",
+      "release_tag": "crbooks-2026-09-16",
       "selection_note": "Pin the established text record 345.",
       "sha256": "a20a6fdcecee0058bffa01009ed52acb50c79e62262b17c1166a5fb3410e9a11",
       "size": "1.4 MB",
       "slug": "345_dracula",
       "source_epub_url": "https://www.gutenberg.org/ebooks/345.epub3.images",
       "source_url": "https://www.gutenberg.org/ebooks/345",
-      "title": "Dracula"
+      "title": "Dracula",
+      "uploaded_at": "2026-09-16T20:45:41Z"
     },
     {
       "asset_name": "1260_jane_eyre.crbook",
@@ -191,13 +211,15 @@
       "download_url": "https://github.com/rahuldave/crbooks/releases/download/crbooks-2026-09-16/1260_jane_eyre.crbook",
       "gutenberg_id": 1260,
       "language": "en",
+      "release_tag": "crbooks-2026-09-16",
       "selection_note": "Illustrated edition; useful asset test.",
       "sha256": "dd6edef091b0d2a455a2eff626202f43363dcf56466174fe95096e96ff0b61e9",
       "size": "6.2 MB",
       "slug": "1260_jane_eyre",
       "source_epub_url": "https://www.gutenberg.org/ebooks/1260.epub3.images",
       "source_url": "https://www.gutenberg.org/ebooks/1260",
-      "title": "Jane Eyre: An Autobiography"
+      "title": "Jane Eyre: An Autobiography",
+      "uploaded_at": "2026-09-16T20:45:41Z"
     },
     {
       "asset_name": "768_wuthering_heights.crbook",
@@ -209,13 +231,15 @@
       "download_url": "https://github.com/rahuldave/crbooks/releases/download/crbooks-2026-09-16/768_wuthering_heights.crbook",
       "gutenberg_id": 768,
       "language": "en",
+      "release_tag": "crbooks-2026-09-16",
       "selection_note": "Standard text edition.",
       "sha256": "f0e12672dbe2bc24afd4616cab8dab030af992855df927f77669f6aeb4c0e835",
       "size": "1.2 MB",
       "slug": "768_wuthering_heights",
       "source_epub_url": "https://www.gutenberg.org/ebooks/768.epub3.images",
       "source_url": "https://www.gutenberg.org/ebooks/768",
-      "title": "Wuthering Heights"
+      "title": "Wuthering Heights",
+      "uploaded_at": "2026-09-16T20:45:41Z"
     },
     {
       "asset_name": "145_middlemarch.crbook",
@@ -227,13 +251,15 @@
       "download_url": "https://github.com/rahuldave/crbooks/releases/download/crbooks-2026-09-16/145_middlemarch.crbook",
       "gutenberg_id": 145,
       "language": "en",
+      "release_tag": "crbooks-2026-09-16",
       "selection_note": "Long multi-part novel.",
       "sha256": "b2c2b26f349ab5170219b3fe97b53ba9a30f34400fe7bbfc8bed9de87444f799",
       "size": "2.5 MB",
       "slug": "145_middlemarch",
       "source_epub_url": "https://www.gutenberg.org/ebooks/145.epub3.images",
       "source_url": "https://www.gutenberg.org/ebooks/145",
-      "title": "Middlemarch"
+      "title": "Middlemarch",
+      "uploaded_at": "2026-09-16T20:45:41Z"
     },
     {
       "asset_name": "37106_little_women.crbook",
@@ -245,13 +271,15 @@
       "download_url": "https://github.com/rahuldave/crbooks/releases/download/crbooks-2026-09-16/37106_little_women.crbook",
       "gutenberg_id": 37106,
       "language": "en",
+      "release_tag": "crbooks-2026-09-16",
       "selection_note": "Illustrated edition.",
       "sha256": "2b853e97813b16750d98da1f3bfe1e5503ec84fdccfc5103e9ff9fd34c182999",
       "size": "32.6 MB",
       "slug": "37106_little_women",
       "source_epub_url": "https://www.gutenberg.org/ebooks/37106.epub3.images",
       "source_url": "https://www.gutenberg.org/ebooks/37106",
-      "title": "Little Women; Or, Meg, Jo, Beth, and Amy"
+      "title": "Little Women; Or, Meg, Jo, Beth, and Amy",
+      "uploaded_at": "2026-09-16T20:45:41Z"
     },
     {
       "asset_name": "21839_sense_and_sensibility.crbook",
@@ -263,13 +291,15 @@
       "download_url": "https://github.com/rahuldave/crbooks/releases/download/crbooks-2026-09-16/21839_sense_and_sensibility.crbook",
       "gutenberg_id": 21839,
       "language": "en",
+      "release_tag": "crbooks-2026-09-16",
       "selection_note": "Illustrated and commented edition; intentionally richer than record 161.",
       "sha256": "ade008c1f8ea169e46c54ce0467c327bf95656c1c33cfc52adcd3f067d8d98c1",
       "size": "4.1 MB",
       "slug": "21839_sense_and_sensibility",
       "source_epub_url": "https://www.gutenberg.org/ebooks/21839.epub3.images",
       "source_url": "https://www.gutenberg.org/ebooks/21839",
-      "title": "Sense and Sensibility"
+      "title": "Sense and Sensibility",
+      "uploaded_at": "2026-09-16T20:45:41Z"
     },
     {
       "asset_name": "2641_a_room_with_a_view.crbook",
@@ -281,13 +311,15 @@
       "download_url": "https://github.com/rahuldave/crbooks/releases/download/crbooks-2026-09-16/2641_a_room_with_a_view.crbook",
       "gutenberg_id": 2641,
       "language": "en",
+      "release_tag": "crbooks-2026-09-16",
       "selection_note": "Twentieth-century novel.",
       "sha256": "d1c5ce18b1c74a176a82815135fb084faabf5d9813ee2fe7582804a1fecf55a2",
       "size": "993.1 KB",
       "slug": "2641_a_room_with_a_view",
       "source_epub_url": "https://www.gutenberg.org/ebooks/2641.epub3.images",
       "source_url": "https://www.gutenberg.org/ebooks/2641",
-      "title": "A Room with a View"
+      "title": "A Room with a View",
+      "uploaded_at": "2026-09-16T20:45:41Z"
     },
     {
       "asset_name": "1400_great_expectations.crbook",
@@ -299,13 +331,15 @@
       "download_url": "https://github.com/rahuldave/crbooks/releases/download/crbooks-2026-09-16/1400_great_expectations.crbook",
       "gutenberg_id": 1400,
       "language": "en",
+      "release_tag": "crbooks-2026-09-16",
       "selection_note": "Long chaptered novel.",
       "sha256": "2c2e40d04080d952000d656d0e66feda869e952c7177a6914311a217c743eabd",
       "size": "27.7 MB",
       "slug": "1400_great_expectations",
       "source_epub_url": "https://www.gutenberg.org/ebooks/1400.epub3.images",
       "source_url": "https://www.gutenberg.org/ebooks/1400",
-      "title": "Great Expectations"
+      "title": "Great Expectations",
+      "uploaded_at": "2026-09-16T20:45:41Z"
     },
     {
       "asset_name": "1661_the_adventures_of_sherlock_holmes.crbook",
@@ -317,13 +351,15 @@
       "download_url": "https://github.com/rahuldave/crbooks/releases/download/crbooks-2026-09-16/1661_the_adventures_of_sherlock_holmes.crbook",
       "gutenberg_id": 1661,
       "language": "en",
+      "release_tag": "crbooks-2026-09-16",
       "selection_note": "Story collection.",
       "sha256": "aff30b090000fdbab119ae0e5db2389da85dff58ef8999af0580b5ec1250ae02",
       "size": "921.6 KB",
       "slug": "1661_the_adventures_of_sherlock_holmes",
       "source_epub_url": "https://www.gutenberg.org/ebooks/1661.epub3.images",
       "source_url": "https://www.gutenberg.org/ebooks/1661",
-      "title": "The Adventures of Sherlock Holmes"
+      "title": "The Adventures of Sherlock Holmes",
+      "uploaded_at": "2026-09-16T20:45:41Z"
     },
     {
       "asset_name": "2852_the_hound_of_the_baskervilles.crbook",
@@ -335,13 +371,15 @@
       "download_url": "https://github.com/rahuldave/crbooks/releases/download/crbooks-2026-09-16/2852_the_hound_of_the_baskervilles.crbook",
       "gutenberg_id": 2852,
       "language": "en",
+      "release_tag": "crbooks-2026-09-16",
       "selection_note": "Mystery novel.",
       "sha256": "97146b87e4805a260d94a499b70e38c7fa29cbf8a28cebb9968b3b50f8b52213",
       "size": "703.2 KB",
       "slug": "2852_the_hound_of_the_baskervilles",
       "source_epub_url": "https://www.gutenberg.org/ebooks/2852.epub3.images",
       "source_url": "https://www.gutenberg.org/ebooks/2852",
-      "title": "The Hound of the Baskervilles"
+      "title": "The Hound of the Baskervilles",
+      "uploaded_at": "2026-09-16T20:45:41Z"
     },
     {
       "asset_name": "863_the_mysterious_affair_at_styles.crbook",
@@ -353,13 +391,15 @@
       "download_url": "https://github.com/rahuldave/crbooks/releases/download/crbooks-2026-09-16/863_the_mysterious_affair_at_styles.crbook",
       "gutenberg_id": 863,
       "language": "en",
+      "release_tag": "crbooks-2026-09-16",
       "selection_note": "Detective novel; US public-domain record.",
       "sha256": "872bfbcc88986050813ee96bbe7c0088681bdd4d5dab93a8d3f8ae55c71697b0",
       "size": "849.6 KB",
       "slug": "863_the_mysterious_affair_at_styles",
       "source_epub_url": "https://www.gutenberg.org/ebooks/863.epub3.images",
       "source_url": "https://www.gutenberg.org/ebooks/863",
-      "title": "The Mysterious Affair at Styles"
+      "title": "The Mysterious Affair at Styles",
+      "uploaded_at": "2026-09-16T20:45:41Z"
     },
     {
       "asset_name": "583_the_woman_in_white.crbook",
@@ -371,13 +411,15 @@
       "download_url": "https://github.com/rahuldave/crbooks/releases/download/crbooks-2026-09-16/583_the_woman_in_white.crbook",
       "gutenberg_id": 583,
       "language": "en",
+      "release_tag": "crbooks-2026-09-16",
       "selection_note": "Long multi-narrator mystery.",
       "sha256": "ceac57ce671cae6be7c8f933868630a5150aa64b2da44ba476808dad49ab3ff6",
       "size": "1.7 MB",
       "slug": "583_the_woman_in_white",
       "source_epub_url": "https://www.gutenberg.org/ebooks/583.epub3.images",
       "source_url": "https://www.gutenberg.org/ebooks/583",
-      "title": "The Woman in White"
+      "title": "The Woman in White",
+      "uploaded_at": "2026-09-16T20:45:41Z"
     },
     {
       "asset_name": "1695_the_man_who_was_thursday.crbook",
@@ -389,13 +431,15 @@
       "download_url": "https://github.com/rahuldave/crbooks/releases/download/crbooks-2026-09-16/1695_the_man_who_was_thursday.crbook",
       "gutenberg_id": 1695,
       "language": "en",
+      "release_tag": "crbooks-2026-09-16",
       "selection_note": "Philosophical thriller.",
       "sha256": "72a74e0bf38f6e30373f61d900270dc342a43348d35342ecdd4fa4cc8fea5984",
       "size": "899.8 KB",
       "slug": "1695_the_man_who_was_thursday",
       "source_epub_url": "https://www.gutenberg.org/ebooks/1695.epub3.images",
       "source_url": "https://www.gutenberg.org/ebooks/1695",
-      "title": "The Man Who Was Thursday: A Nightmare"
+      "title": "The Man Who Was Thursday: A Nightmare",
+      "uploaded_at": "2026-09-16T20:45:41Z"
     },
     {
       "asset_name": "103_around_the_world_in_eighty_days.crbook",
@@ -407,13 +451,15 @@
       "download_url": "https://github.com/rahuldave/crbooks/releases/download/crbooks-2026-09-16/103_around_the_world_in_eighty_days.crbook",
       "gutenberg_id": 103,
       "language": "en",
+      "release_tag": "crbooks-2026-09-16",
       "selection_note": "English translation.",
       "sha256": "16ef68d9da620e4b0db70cd1b08117fbe299c2bbda4789da105e6a1cc13ed5fe",
       "size": "942.9 KB",
       "slug": "103_around_the_world_in_eighty_days",
       "source_epub_url": "https://www.gutenberg.org/ebooks/103.epub3.images",
       "source_url": "https://www.gutenberg.org/ebooks/103",
-      "title": "Around the World in Eighty Days"
+      "title": "Around the World in Eighty Days",
+      "uploaded_at": "2026-09-16T20:45:41Z"
     },
     {
       "asset_name": "120_treasure_island.crbook",
@@ -425,13 +471,15 @@
       "download_url": "https://github.com/rahuldave/crbooks/releases/download/crbooks-2026-09-16/120_treasure_island.crbook",
       "gutenberg_id": 120,
       "language": "en",
+      "release_tag": "crbooks-2026-09-16",
       "selection_note": "Illustrated adventure.",
       "sha256": "0b1be8169e4f3d810df807510fd5fc5303fad2d6a0d35218f1086db72362cda2",
       "size": "93.8 MB",
       "slug": "120_treasure_island",
       "source_epub_url": "https://www.gutenberg.org/ebooks/120.epub3.images",
       "source_url": "https://www.gutenberg.org/ebooks/120",
-      "title": "Treasure Island"
+      "title": "Treasure Island",
+      "uploaded_at": "2026-09-16T20:45:41Z"
     },
     {
       "asset_name": "55_the_wonderful_wizard_of_oz.crbook",
@@ -443,13 +491,15 @@
       "download_url": "https://github.com/rahuldave/crbooks/releases/download/crbooks-2026-09-16/55_the_wonderful_wizard_of_oz.crbook",
       "gutenberg_id": 55,
       "language": "en",
+      "release_tag": "crbooks-2026-09-16",
       "selection_note": "Illustrated children's fantasy.",
       "sha256": "0e26ec962cbc20137d960a7db16b47ba75e57d76e819160c8ae8d2e8050dd669",
       "size": "718.8 KB",
       "slug": "55_the_wonderful_wizard_of_oz",
       "source_epub_url": "https://www.gutenberg.org/ebooks/55.epub3.images",
       "source_url": "https://www.gutenberg.org/ebooks/55",
-      "title": "The Wonderful Wizard of Oz"
+      "title": "The Wonderful Wizard of Oz",
+      "uploaded_at": "2026-09-16T20:45:41Z"
     },
     {
       "asset_name": "271_black_beauty.crbook",
@@ -461,13 +511,15 @@
       "download_url": "https://github.com/rahuldave/crbooks/releases/download/crbooks-2026-09-16/271_black_beauty.crbook",
       "gutenberg_id": 271,
       "language": "en",
+      "release_tag": "crbooks-2026-09-16",
       "selection_note": "Popular episodic novel.",
       "sha256": "72e9c0d8cc79406ba3e9da18c95e1467b1aa276ab56523e6e62a7233c7d5fcb7",
       "size": "859.9 KB",
       "slug": "271_black_beauty",
       "source_epub_url": "https://www.gutenberg.org/ebooks/271.epub3.images",
       "source_url": "https://www.gutenberg.org/ebooks/271",
-      "title": "Black Beauty"
+      "title": "Black Beauty",
+      "uploaded_at": "2026-09-16T20:45:41Z"
     },
     {
       "asset_name": "1184_the_count_of_monte_cristo.crbook",
@@ -479,13 +531,15 @@
       "download_url": "https://github.com/rahuldave/crbooks/releases/download/crbooks-2026-09-16/1184_the_count_of_monte_cristo.crbook",
       "gutenberg_id": 1184,
       "language": "en",
+      "release_tag": "crbooks-2026-09-16",
       "selection_note": "Very long English translation.",
       "sha256": "ebbe80a62863c63081f9940a10a8bac1325bd77e27243e9341b87a6e981fc902",
       "size": "161.6 MB",
       "slug": "1184_the_count_of_monte_cristo",
       "source_epub_url": "https://www.gutenberg.org/ebooks/1184.epub3.images",
       "source_url": "https://www.gutenberg.org/ebooks/1184",
-      "title": "The Count of Monte Cristo"
+      "title": "The Count of Monte Cristo",
+      "uploaded_at": "2026-09-16T20:45:41Z"
     },
     {
       "asset_name": "2701_moby_dick.crbook",
@@ -497,13 +551,15 @@
       "download_url": "https://github.com/rahuldave/crbooks/releases/download/crbooks-2026-09-16/2701_moby_dick.crbook",
       "gutenberg_id": 2701,
       "language": "en",
+      "release_tag": "crbooks-2026-09-16",
       "selection_note": "Very long novel with varied chapter forms.",
       "sha256": "72bfb99a1046fd602afd240c6c367a6d8ac63e4a0bb1ed172d67eaf937d31f69",
       "size": "2.0 MB",
       "slug": "2701_moby_dick",
       "source_epub_url": "https://www.gutenberg.org/ebooks/2701.epub3.images",
       "source_url": "https://www.gutenberg.org/ebooks/2701",
-      "title": "Moby Dick; Or, The Whale"
+      "title": "Moby Dick; Or, The Whale",
+      "uploaded_at": "2026-09-16T20:45:41Z"
     },
     {
       "asset_name": "2554_crime_and_punishment.crbook",
@@ -515,13 +571,15 @@
       "download_url": "https://github.com/rahuldave/crbooks/releases/download/crbooks-2026-09-16/2554_crime_and_punishment.crbook",
       "gutenberg_id": 2554,
       "language": "en",
+      "release_tag": "crbooks-2026-09-16",
       "selection_note": "English translation.",
       "sha256": "d991c321a4d87e2c348e4c60a50cd927000521716ae57cadd80ccbf92edcded8",
       "size": "1.8 MB",
       "slug": "2554_crime_and_punishment",
       "source_epub_url": "https://www.gutenberg.org/ebooks/2554.epub3.images",
       "source_url": "https://www.gutenberg.org/ebooks/2554",
-      "title": "Crime and Punishment"
+      "title": "Crime and Punishment",
+      "uploaded_at": "2026-09-16T20:45:41Z"
     },
     {
       "asset_name": "829_gullivers_travels.crbook",
@@ -533,13 +591,15 @@
       "download_url": "https://github.com/rahuldave/crbooks/releases/download/crbooks-2026-09-16/829_gullivers_travels.crbook",
       "gutenberg_id": 829,
       "language": "en",
+      "release_tag": "crbooks-2026-09-16",
       "selection_note": "Multi-part satirical fiction.",
       "sha256": "ef0b201d4f32370c352f5b47482b2f1cdeb39f1205825d8c25c66e395ce3b500",
       "size": "1.5 MB",
       "slug": "829_gullivers_travels",
       "source_epub_url": "https://www.gutenberg.org/ebooks/829.epub3.images",
       "source_url": "https://www.gutenberg.org/ebooks/829",
-      "title": "Gulliver's Travels into Several Remote Nations of the World"
+      "title": "Gulliver's Travels into Several Remote Nations of the World",
+      "uploaded_at": "2026-09-16T20:45:41Z"
     },
     {
       "asset_name": "2542_a_dolls_house.crbook",
@@ -551,13 +611,15 @@
       "download_url": "https://github.com/rahuldave/crbooks/releases/download/crbooks-2026-09-16/2542_a_dolls_house.crbook",
       "gutenberg_id": 2542,
       "language": "en",
+      "release_tag": "crbooks-2026-09-16",
       "selection_note": "Play with acts and dialogue.",
       "sha256": "16340e663344e0c687977afa267218cefa7b8dae6ac3ae48f479ce83aef1550d",
       "size": "520.4 KB",
       "slug": "2542_a_dolls_house",
       "source_epub_url": "https://www.gutenberg.org/ebooks/2542.epub3.images",
       "source_url": "https://www.gutenberg.org/ebooks/2542",
-      "title": "A Doll's House"
+      "title": "A Doll's House",
+      "uploaded_at": "2026-09-16T20:45:41Z"
     },
     {
       "asset_name": "1727_the_odyssey.crbook",
@@ -569,13 +631,15 @@
       "download_url": "https://github.com/rahuldave/crbooks/releases/download/crbooks-2026-09-16/1727_the_odyssey.crbook",
       "gutenberg_id": 1727,
       "language": "en",
+      "release_tag": "crbooks-2026-09-16",
       "selection_note": "English prose translation.",
       "sha256": "3c13a2bbbaf3792aeceb6374f49cdaa53462de35aaa83f2f14d8946c76c90884",
       "size": "1.0 MB",
       "slug": "1727_the_odyssey",
       "source_epub_url": "https://www.gutenberg.org/ebooks/1727.epub3.images",
       "source_url": "https://www.gutenberg.org/ebooks/1727",
-      "title": "The Odyssey"
+      "title": "The Odyssey",
+      "uploaded_at": "2026-09-16T20:45:41Z"
     },
     {
       "asset_name": "1513_romeo_and_juliet.crbook",
@@ -587,13 +651,15 @@
       "download_url": "https://github.com/rahuldave/crbooks/releases/download/crbooks-2026-09-16/1513_romeo_and_juliet.crbook",
       "gutenberg_id": 1513,
       "language": "en",
+      "release_tag": "crbooks-2026-09-16",
       "selection_note": "Acts, scenes, speakers, and verse.",
       "sha256": "722d5b1821d3a94e23dee76009f5c7c10eb9f2ab3fa58bca3f30aba08c89e02c",
       "size": "615.7 KB",
       "slug": "1513_romeo_and_juliet",
       "source_epub_url": "https://www.gutenberg.org/ebooks/1513.epub3.images",
       "source_url": "https://www.gutenberg.org/ebooks/1513",
-      "title": "Romeo and Juliet"
+      "title": "Romeo and Juliet",
+      "uploaded_at": "2026-09-16T20:45:41Z"
     },
     {
       "asset_name": "16328_beowulf.crbook",
@@ -605,13 +671,15 @@
       "download_url": "https://github.com/rahuldave/crbooks/releases/download/crbooks-2026-09-16/16328_beowulf.crbook",
       "gutenberg_id": 16328,
       "language": "en",
+      "release_tag": "crbooks-2026-09-16",
       "selection_note": "English verse translation.",
       "sha256": "634ae0da1a28382b64c679a19d975864140cc73d93124feb1b5f7f254564bbf8",
       "size": "741.5 KB",
       "slug": "16328_beowulf",
       "source_epub_url": "https://www.gutenberg.org/ebooks/16328.epub3.images",
       "source_url": "https://www.gutenberg.org/ebooks/16328",
-      "title": "Beowulf: An Anglo-Saxon Epic Poem"
+      "title": "Beowulf: An Anglo-Saxon Epic Poem",
+      "uploaded_at": "2026-09-16T20:45:41Z"
     },
     {
       "asset_name": "3420_a_vindication_of_the_rights_of_woman.crbook",
@@ -623,13 +691,15 @@
       "download_url": "https://github.com/rahuldave/crbooks/releases/download/crbooks-2026-09-16/3420_a_vindication_of_the_rights_of_woman.crbook",
       "gutenberg_id": 3420,
       "language": "en",
+      "release_tag": "crbooks-2026-09-16",
       "selection_note": "Foundational feminist political argument.",
       "sha256": "677162a4f7fbd44618a66b3e10d38c8a901ae7b5fb8051b3189233dc89baba8e",
       "size": "734.6 KB",
       "slug": "3420_a_vindication_of_the_rights_of_woman",
       "source_epub_url": "https://www.gutenberg.org/ebooks/3420.epub3.images",
       "source_url": "https://www.gutenberg.org/ebooks/3420",
-      "title": "A Vindication of the Rights of Woman"
+      "title": "A Vindication of the Rights of Woman",
+      "uploaded_at": "2026-09-16T20:45:41Z"
     },
     {
       "asset_name": "1497_the_republic.crbook",
@@ -641,13 +711,15 @@
       "download_url": "https://github.com/rahuldave/crbooks/releases/download/crbooks-2026-09-16/1497_the_republic.crbook",
       "gutenberg_id": 1497,
       "language": "en",
+      "release_tag": "crbooks-2026-09-16",
       "selection_note": "Foundational political philosophy in dialogue form.",
       "sha256": "5449b384194f9dc2eb3fcfd58fc7834fa3a4f314e7f1d714457d02e2031b1bcb",
       "size": "1.3 MB",
       "slug": "1497_the_republic",
       "source_epub_url": "https://www.gutenberg.org/ebooks/1497.epub3.images",
       "source_url": "https://www.gutenberg.org/ebooks/1497",
-      "title": "The Republic"
+      "title": "The Republic",
+      "uploaded_at": "2026-09-16T20:45:41Z"
     },
     {
       "asset_name": "1232_the_prince.crbook",
@@ -659,13 +731,15 @@
       "download_url": "https://github.com/rahuldave/crbooks/releases/download/crbooks-2026-09-16/1232_the_prince.crbook",
       "gutenberg_id": 1232,
       "language": "en",
+      "release_tag": "crbooks-2026-09-16",
       "selection_note": "Political power and statecraft.",
       "sha256": "1d5a2d6175eb264e1f2f5cf723dc57f101bb5026f575cbde1ea0d1e8edeb2e3b",
       "size": "761.8 KB",
       "slug": "1232_the_prince",
       "source_epub_url": "https://www.gutenberg.org/ebooks/1232.epub3.images",
       "source_url": "https://www.gutenberg.org/ebooks/1232",
-      "title": "The Prince"
+      "title": "The Prince",
+      "uploaded_at": "2026-09-16T20:45:41Z"
     },
     {
       "asset_name": "3207_leviathan.crbook",
@@ -677,13 +751,15 @@
       "download_url": "https://github.com/rahuldave/crbooks/releases/download/crbooks-2026-09-16/3207_leviathan.crbook",
       "gutenberg_id": 3207,
       "language": "en",
+      "release_tag": "crbooks-2026-09-16",
       "selection_note": "Foundational social-contract theory.",
       "sha256": "193dec5cae4568ee88d9d7cba53a64b5b1ec330c3f4631adf3082c856dc97e49",
       "size": "1.9 MB",
       "slug": "3207_leviathan",
       "source_epub_url": "https://www.gutenberg.org/ebooks/3207.epub3.images",
       "source_url": "https://www.gutenberg.org/ebooks/3207",
-      "title": "Leviathan"
+      "title": "Leviathan",
+      "uploaded_at": "2026-09-16T20:45:41Z"
     },
     {
       "asset_name": "34901_on_liberty.crbook",
@@ -695,13 +771,15 @@
       "download_url": "https://github.com/rahuldave/crbooks/releases/download/crbooks-2026-09-16/34901_on_liberty.crbook",
       "gutenberg_id": 34901,
       "language": "en",
+      "release_tag": "crbooks-2026-09-16",
       "selection_note": "Classic argument about freedom and social authority.",
       "sha256": "d130e17c90376cc743780fb388e7599e3f009b9a9fef66683ae631905eac2b5d",
       "size": "440.1 KB",
       "slug": "34901_on_liberty",
       "source_epub_url": "https://www.gutenberg.org/ebooks/34901.epub3.images",
       "source_url": "https://www.gutenberg.org/ebooks/34901",
-      "title": "On Liberty"
+      "title": "On Liberty",
+      "uploaded_at": "2026-09-16T20:45:41Z"
     },
     {
       "asset_name": "3300_the_wealth_of_nations.crbook",
@@ -713,13 +791,15 @@
       "download_url": "https://github.com/rahuldave/crbooks/releases/download/crbooks-2026-09-16/3300_the_wealth_of_nations.crbook",
       "gutenberg_id": 3300,
       "language": "en",
+      "release_tag": "crbooks-2026-09-16",
       "selection_note": "Foundational economics; Gutenberg Best Books and Harvard Classics selection.",
       "sha256": "7e8867c5d506a0bf88afc14ec80bc919270a496ef6d2fc644ca19d54aeb70134",
       "size": "2.3 MB",
       "slug": "3300_the_wealth_of_nations",
       "source_epub_url": "https://www.gutenberg.org/ebooks/3300.epub3.images",
       "source_url": "https://www.gutenberg.org/ebooks/3300",
-      "title": "An Inquiry into the Nature and Causes of the Wealth of Nations"
+      "title": "An Inquiry into the Nature and Causes of the Wealth of Nations",
+      "uploaded_at": "2026-09-16T20:45:41Z"
     },
     {
       "asset_name": "61_the_communist_manifesto.crbook",
@@ -731,13 +811,15 @@
       "download_url": "https://github.com/rahuldave/crbooks/releases/download/crbooks-2026-09-16/61_the_communist_manifesto.crbook",
       "gutenberg_id": 61,
       "language": "en",
+      "release_tag": "crbooks-2026-09-16",
       "selection_note": "Historically central political and economic text.",
       "sha256": "7b53cf1c9ba91732faa0fdb567502fe3148a396543f09c18cae45be0253ecd8e",
       "size": "219.8 KB",
       "slug": "61_the_communist_manifesto",
       "source_epub_url": "https://www.gutenberg.org/ebooks/61.epub3.images",
       "source_url": "https://www.gutenberg.org/ebooks/61",
-      "title": "The Communist Manifesto"
+      "title": "The Communist Manifesto",
+      "uploaded_at": "2026-09-16T20:45:41Z"
     },
     {
       "asset_name": "18_the_federalist_papers.crbook",
@@ -749,13 +831,15 @@
       "download_url": "https://github.com/rahuldave/crbooks/releases/download/crbooks-2026-09-16/18_the_federalist_papers.crbook",
       "gutenberg_id": 18,
       "language": "en",
+      "release_tag": "crbooks-2026-09-16",
       "selection_note": "Pin maintained record 18 over duplicate record 1404; 85 addressable essays.",
       "sha256": "f1b879b5d769b187afe7476f02d1848016bc1e73e5f0100345624e4a11b50750",
       "size": "1.6 MB",
       "slug": "18_the_federalist_papers",
       "source_epub_url": "https://www.gutenberg.org/ebooks/18.epub3.images",
       "source_url": "https://www.gutenberg.org/ebooks/18",
-      "title": "The Federalist Papers"
+      "title": "The Federalist Papers",
+      "uploaded_at": "2026-09-16T20:45:41Z"
     },
     {
       "asset_name": "147_common_sense.crbook",
@@ -767,13 +851,15 @@
       "download_url": "https://github.com/rahuldave/crbooks/releases/download/crbooks-2026-09-16/147_common_sense.crbook",
       "gutenberg_id": 147,
       "language": "en",
+      "release_tag": "crbooks-2026-09-16",
       "selection_note": "Short influential political argument.",
       "sha256": "1fc6a9eb157ad7fe0dfda60bc9c579038fbf33e212d31410a78a7d6c0e200426",
       "size": "634.9 KB",
       "slug": "147_common_sense",
       "source_epub_url": "https://www.gutenberg.org/ebooks/147.epub3.images",
       "source_url": "https://www.gutenberg.org/ebooks/147",
-      "title": "Common Sense"
+      "title": "Common Sense",
+      "uploaded_at": "2026-09-16T20:45:41Z"
     },
     {
       "asset_name": "132_the_art_of_war.crbook",
@@ -785,13 +871,15 @@
       "download_url": "https://github.com/rahuldave/crbooks/releases/download/crbooks-2026-09-16/132_the_art_of_war.crbook",
       "gutenberg_id": 132,
       "language": "en",
+      "release_tag": "crbooks-2026-09-16",
       "selection_note": "Compact section-based military and strategic thought.",
       "sha256": "768d4f31d650acd6498b72fc8529150df870d4fdcd3efb613f38dad04523c712",
       "size": "498.0 KB",
       "slug": "132_the_art_of_war",
       "source_epub_url": "https://www.gutenberg.org/ebooks/132.epub3.images",
       "source_url": "https://www.gutenberg.org/ebooks/132",
-      "title": "The Art of War"
+      "title": "The Art of War",
+      "uploaded_at": "2026-09-16T20:45:41Z"
     },
     {
       "asset_name": "205_walden_and_civil_disobedience.crbook",
@@ -803,13 +891,15 @@
       "download_url": "https://github.com/rahuldave/crbooks/releases/download/crbooks-2026-09-16/205_walden_and_civil_disobedience.crbook",
       "gutenberg_id": 205,
       "language": "en",
+      "release_tag": "crbooks-2026-09-16",
       "selection_note": "Record 205 contains both works; do not also add duplicate record 71.",
       "sha256": "948c8cd5ebf6350484bcf045de1e7187efd11258fa16393a4bfe740cc9e722a7",
       "size": "1.5 MB",
       "slug": "205_walden_and_civil_disobedience",
       "source_epub_url": "https://www.gutenberg.org/ebooks/205.epub3.images",
       "source_url": "https://www.gutenberg.org/ebooks/205",
-      "title": "Walden, and On the Duty of Civil Disobedience"
+      "title": "Walden, and On the Duty of Civil Disobedience",
+      "uploaded_at": "2026-09-16T20:45:41Z"
     },
     {
       "asset_name": "2680_meditations.crbook",
@@ -821,13 +911,15 @@
       "download_url": "https://github.com/rahuldave/crbooks/releases/download/crbooks-2026-09-16/2680_meditations.crbook",
       "gutenberg_id": 2680,
       "language": "en",
+      "release_tag": "crbooks-2026-09-16",
       "selection_note": "Fragment-like numbered sections.",
       "sha256": "879f41a2b1c0d0fe2757e1fc990bd35d0f6151aeb59736887f1be0dffa04bb06",
       "size": "998.7 KB",
       "slug": "2680_meditations",
       "source_epub_url": "https://www.gutenberg.org/ebooks/2680.epub3.images",
       "source_url": "https://www.gutenberg.org/ebooks/2680",
-      "title": "Meditations"
+      "title": "Meditations",
+      "uploaded_at": "2026-09-16T20:45:41Z"
     },
     {
       "asset_name": "5827_the_problems_of_philosophy.crbook",
@@ -839,13 +931,15 @@
       "download_url": "https://github.com/rahuldave/crbooks/releases/download/crbooks-2026-09-16/5827_the_problems_of_philosophy.crbook",
       "gutenberg_id": 5827,
       "language": "en",
+      "release_tag": "crbooks-2026-09-16",
       "selection_note": "Accessible introduction to epistemology and metaphysics.",
       "sha256": "3aabf912bdb519e20f9325106a05ae132ad1439a7a866aa43bfef7b5d5ca311f",
       "size": "350.6 KB",
       "slug": "5827_the_problems_of_philosophy",
       "source_epub_url": "https://www.gutenberg.org/ebooks/5827.epub3.images",
       "source_url": "https://www.gutenberg.org/ebooks/5827",
-      "title": "The Problems of Philosophy"
+      "title": "The Problems of Philosophy",
+      "uploaded_at": "2026-09-16T20:45:41Z"
     },
     {
       "asset_name": "621_the_varieties_of_religious_experience.crbook",
@@ -857,13 +951,15 @@
       "download_url": "https://github.com/rahuldave/crbooks/releases/download/crbooks-2026-09-16/621_the_varieties_of_religious_experience.crbook",
       "gutenberg_id": 621,
       "language": "en",
+      "release_tag": "crbooks-2026-09-16",
       "selection_note": "Major work spanning psychology, philosophy, and religion.",
       "sha256": "59b473d48ab29828ea152ea775526e19cf01057c6e7cc1aaf347a1cffc847835",
       "size": "1.4 MB",
       "slug": "621_the_varieties_of_religious_experience",
       "source_epub_url": "https://www.gutenberg.org/ebooks/621.epub3.images",
       "source_url": "https://www.gutenberg.org/ebooks/621",
-      "title": "The Varieties of Religious Experience"
+      "title": "The Varieties of Religious Experience",
+      "uploaded_at": "2026-09-16T20:45:41Z"
     },
     {
       "asset_name": "66048_the_interpretation_of_dreams.crbook",
@@ -875,13 +971,15 @@
       "download_url": "https://github.com/rahuldave/crbooks/releases/download/crbooks-2026-09-16/66048_the_interpretation_of_dreams.crbook",
       "gutenberg_id": 66048,
       "language": "en",
+      "release_tag": "crbooks-2026-09-16",
       "selection_note": "Historically important work of psychology.",
       "sha256": "09f3fa8e498ad65ec0fb809e66822bb35a6687374a0ebf93dba84e88d35a7f10",
       "size": "2.0 MB",
       "slug": "66048_the_interpretation_of_dreams",
       "source_epub_url": "https://www.gutenberg.org/ebooks/66048.epub3.images",
       "source_url": "https://www.gutenberg.org/ebooks/66048",
-      "title": "The Interpretation of Dreams"
+      "title": "The Interpretation of Dreams",
+      "uploaded_at": "2026-09-16T20:45:41Z"
     },
     {
       "asset_name": "1228_on_the_origin_of_species_1859.crbook",
@@ -893,13 +991,15 @@
       "download_url": "https://github.com/rahuldave/crbooks/releases/download/crbooks-2026-09-16/1228_on_the_origin_of_species_1859.crbook",
       "gutenberg_id": 1228,
       "language": "en",
+      "release_tag": "crbooks-2026-09-16",
       "selection_note": "1859 first edition; chosen over later records 22764 and 2009.",
       "sha256": "71bc87c8576a67cfd57c92c7bddfb7e5b6e0d06da884b0456ab043d1ecf5608e",
       "size": "1.1 MB",
       "slug": "1228_on_the_origin_of_species_1859",
       "source_epub_url": "https://www.gutenberg.org/ebooks/1228.epub3.images",
       "source_url": "https://www.gutenberg.org/ebooks/1228",
-      "title": "On the Origin of Species"
+      "title": "On the Origin of Species",
+      "uploaded_at": "2026-09-16T20:45:41Z"
     },
     {
       "asset_name": "944_the_voyage_of_the_beagle.crbook",
@@ -911,13 +1011,15 @@
       "download_url": "https://github.com/rahuldave/crbooks/releases/download/crbooks-2026-09-16/944_the_voyage_of_the_beagle.crbook",
       "gutenberg_id": 944,
       "language": "en",
+      "release_tag": "crbooks-2026-09-16",
       "selection_note": "Scientific observation, travel, geology, and natural history.",
       "sha256": "c7f2ffb080e01252b423f6b581f0ddb1be604fd8ce772c2504c0ac2e890e8a04",
       "size": "5.3 MB",
       "slug": "944_the_voyage_of_the_beagle",
       "source_epub_url": "https://www.gutenberg.org/ebooks/944.epub3.images",
       "source_url": "https://www.gutenberg.org/ebooks/944",
-      "title": "The Voyage of the Beagle"
+      "title": "The Voyage of the Beagle",
+      "uploaded_at": "2026-09-16T20:45:41Z"
     },
     {
       "asset_name": "2300_the_descent_of_man.crbook",
@@ -929,13 +1031,15 @@
       "download_url": "https://github.com/rahuldave/crbooks/releases/download/crbooks-2026-09-16/2300_the_descent_of_man.crbook",
       "gutenberg_id": 2300,
       "language": "en",
+      "release_tag": "crbooks-2026-09-16",
       "selection_note": "Historically important evolutionary argument with dated claims requiring context.",
       "sha256": "c11d0c94c83bf41e3704c711b1da94a7cb65444af44a66d3e51159b0ccc6a92f",
       "size": "2.0 MB",
       "slug": "2300_the_descent_of_man",
       "source_epub_url": "https://www.gutenberg.org/ebooks/2300.epub3.images",
       "source_url": "https://www.gutenberg.org/ebooks/2300",
-      "title": "The Descent of Man, and Selection in Relation to Sex"
+      "title": "The Descent of Man, and Selection in Relation to Sex",
+      "uploaded_at": "2026-09-16T20:45:41Z"
     },
     {
       "asset_name": "5001_relativity.crbook",
@@ -947,13 +1051,15 @@
       "download_url": "https://github.com/rahuldave/crbooks/releases/download/crbooks-2026-09-16/5001_relativity.crbook",
       "gutenberg_id": 5001,
       "language": "en",
+      "release_tag": "crbooks-2026-09-16",
       "selection_note": "Landmark physics written for a general audience.",
       "sha256": "3adf17699717298dba3471abddaf9e1be8d126d907a24218f8d7fcbdd4527aa3",
       "size": "923.7 KB",
       "slug": "5001_relativity",
       "source_epub_url": "https://www.gutenberg.org/ebooks/5001.epub3.images",
       "source_url": "https://www.gutenberg.org/ebooks/5001",
-      "title": "Relativity: The Special and General Theory"
+      "title": "Relativity: The Special and General Theory",
+      "uploaded_at": "2026-09-16T20:45:41Z"
     },
     {
       "asset_name": "33283_calculus_made_easy.crbook",
@@ -965,13 +1071,15 @@
       "download_url": "https://github.com/rahuldave/crbooks/releases/download/crbooks-2026-09-16/33283_calculus_made_easy.crbook",
       "gutenberg_id": 33283,
       "language": "en",
+      "release_tag": "crbooks-2026-09-16",
       "selection_note": "Accessible classic introduction to differential and integral calculus.",
       "sha256": "9a3fded214defb30676fb6c7ef246c89d19093cb54685045d7e7339c217fef91",
       "size": "7.5 MB",
       "slug": "33283_calculus_made_easy",
       "source_epub_url": "https://www.gutenberg.org/ebooks/33283.epub3.images",
       "source_url": "https://www.gutenberg.org/ebooks/33283",
-      "title": "Calculus Made Easy"
+      "title": "Calculus Made Easy",
+      "uploaded_at": "2026-09-16T20:45:41Z"
     },
     {
       "asset_name": "23_narrative_of_the_life_of_frederick_douglass.crbook",
@@ -983,13 +1091,15 @@
       "download_url": "https://github.com/rahuldave/crbooks/releases/download/crbooks-2026-09-16/23_narrative_of_the_life_of_frederick_douglass.crbook",
       "gutenberg_id": 23,
       "language": "en",
+      "release_tag": "crbooks-2026-09-16",
       "selection_note": "Foundational autobiography and testimony.",
       "sha256": "16119ebfa1846c3b29be3aae26ab480c139b8e734cd31d0c8cd5d5bfafdf0322",
       "size": "768.2 KB",
       "slug": "23_narrative_of_the_life_of_frederick_douglass",
       "source_epub_url": "https://www.gutenberg.org/ebooks/23.epub3.images",
       "source_url": "https://www.gutenberg.org/ebooks/23",
-      "title": "Narrative of the Life of Frederick Douglass, an American Slave"
+      "title": "Narrative of the Life of Frederick Douglass, an American Slave",
+      "uploaded_at": "2026-09-16T20:45:41Z"
     },
     {
       "asset_name": "11030_incidents_in_the_life_of_a_slave_girl.crbook",
@@ -1001,13 +1111,15 @@
       "download_url": "https://github.com/rahuldave/crbooks/releases/download/crbooks-2026-09-16/11030_incidents_in_the_life_of_a_slave_girl.crbook",
       "gutenberg_id": 11030,
       "language": "en",
+      "release_tag": "crbooks-2026-09-16",
       "selection_note": "Autobiography with editorial matter.",
       "sha256": "cb60f8b87f2f8982bc6fc85770e084d249c822237f24f6ee6ec4eb2e82a5e846",
       "size": "1007.8 KB",
       "slug": "11030_incidents_in_the_life_of_a_slave_girl",
       "source_epub_url": "https://www.gutenberg.org/ebooks/11030.epub3.images",
       "source_url": "https://www.gutenberg.org/ebooks/11030",
-      "title": "Incidents in the Life of a Slave Girl, Written by Herself"
+      "title": "Incidents in the Life of a Slave Girl, Written by Herself",
+      "uploaded_at": "2026-09-16T20:45:41Z"
     },
     {
       "asset_name": "408_the_souls_of_black_folk.crbook",
@@ -1019,13 +1131,15 @@
       "download_url": "https://github.com/rahuldave/crbooks/releases/download/crbooks-2026-09-16/408_the_souls_of_black_folk.crbook",
       "gutenberg_id": 408,
       "language": "en",
+      "release_tag": "crbooks-2026-09-16",
       "selection_note": "Essay collection; record 408 is text while record 28844 is audio.",
       "sha256": "88f4a3bca04161ec1926d32cbeebb797f92184c3a96eed914cd7e8050a439a28",
       "size": "3.8 MB",
       "slug": "408_the_souls_of_black_folk",
       "source_epub_url": "https://www.gutenberg.org/ebooks/408.epub3.images",
       "source_url": "https://www.gutenberg.org/ebooks/408",
-      "title": "The Souls of Black Folk"
+      "title": "The Souls of Black Folk",
+      "uploaded_at": "2026-09-16T20:45:41Z"
     },
     {
       "asset_name": "7142_the_history_of_the_peloponnesian_war.crbook",
@@ -1037,13 +1151,15 @@
       "download_url": "https://github.com/rahuldave/crbooks/releases/download/crbooks-2026-09-16/7142_the_history_of_the_peloponnesian_war.crbook",
       "gutenberg_id": 7142,
       "language": "en",
+      "release_tag": "crbooks-2026-09-16",
       "selection_note": "Foundational political and military history.",
       "sha256": "1ae4c6e07e61d2dbadf21d830cc7dfc3f624957b789d280f71586427100ab3c4",
       "size": "1.3 MB",
       "slug": "7142_the_history_of_the_peloponnesian_war",
       "source_epub_url": "https://www.gutenberg.org/ebooks/7142.epub3.images",
       "source_url": "https://www.gutenberg.org/ebooks/7142",
-      "title": "The History of the Peloponnesian War"
+      "title": "The History of the Peloponnesian War",
+      "uploaded_at": "2026-09-16T20:45:41Z"
     },
     {
       "asset_name": "148_the_autobiography_of_benjamin_franklin.crbook",
@@ -1055,13 +1171,15 @@
       "download_url": "https://github.com/rahuldave/crbooks/releases/download/crbooks-2026-09-16/148_the_autobiography_of_benjamin_franklin.crbook",
       "gutenberg_id": 148,
       "language": "en",
+      "release_tag": "crbooks-2026-09-16",
       "selection_note": "Pin the simpler Harvard Classics record 148 over illustrated record 20203.",
       "sha256": "c629b6aae7a231367cb0a972fa612c7435aad0be45e998ab2d24dbf07984ef29",
       "size": "814.0 KB",
       "slug": "148_the_autobiography_of_benjamin_franklin",
       "source_epub_url": "https://www.gutenberg.org/ebooks/148.epub3.images",
       "source_url": "https://www.gutenberg.org/ebooks/148",
-      "title": "The Autobiography of Benjamin Franklin"
+      "title": "The Autobiography of Benjamin Franklin",
+      "uploaded_at": "2026-09-16T20:45:41Z"
     },
     {
       "asset_name": "2376_up_from_slavery.crbook",
@@ -1073,13 +1191,15 @@
       "download_url": "https://github.com/rahuldave/crbooks/releases/download/crbooks-2026-09-16/2376_up_from_slavery.crbook",
       "gutenberg_id": 2376,
       "language": "en",
+      "release_tag": "crbooks-2026-09-16",
       "selection_note": "Major African American autobiography and historical document.",
       "sha256": "fdc04518239ae6b0eb6a9520b5f81c9e1e26e5d4c9cbc44f8d7edd10ca99c5fa",
       "size": "777.6 KB",
       "slug": "2376_up_from_slavery",
       "source_epub_url": "https://www.gutenberg.org/ebooks/2376.epub3.images",
       "source_url": "https://www.gutenberg.org/ebooks/2376",
-      "title": "Up from Slavery: An Autobiography"
+      "title": "Up from Slavery: An Autobiography",
+      "uploaded_at": "2026-09-16T20:45:41Z"
     },
     {
       "asset_name": "15399_the_interesting_narrative_of_olaudah_equiano.crbook",
@@ -1091,13 +1211,15 @@
       "download_url": "https://github.com/rahuldave/crbooks/releases/download/crbooks-2026-09-16/15399_the_interesting_narrative_of_olaudah_equiano.crbook",
       "gutenberg_id": 15399,
       "language": "en",
+      "release_tag": "crbooks-2026-09-16",
       "selection_note": "Foundational firsthand account of enslavement and abolition.",
       "sha256": "516bad18238a23160cb167e9b0bcb52dc885b21ab4cf5038bc76bf51b35e895a",
       "size": "784.1 KB",
       "slug": "15399_the_interesting_narrative_of_olaudah_equiano",
       "source_epub_url": "https://www.gutenberg.org/ebooks/15399.epub3.images",
       "source_url": "https://www.gutenberg.org/ebooks/15399",
-      "title": "The Interesting Narrative of the Life of Olaudah Equiano"
+      "title": "The Interesting Narrative of the Life of Olaudah Equiano",
+      "uploaded_at": "2026-09-16T20:45:41Z"
     }
   ],
   "categories": [
@@ -1144,5 +1266,5 @@
   },
   "total_bytes": 463597760,
   "total_size": "442.1 MB",
-  "version": 1
+  "version": 2
 }

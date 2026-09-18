@@ -11,6 +11,7 @@ from PIL import Image
 from scripts.build_public_catalog import (
     Book,
     format_release_date,
+    latest_release,
     load_catalog,
     normalize_release_published_at,
     publish_spec,
@@ -18,6 +19,7 @@ from scripts.build_public_catalog import (
     render_index,
     sha256_file,
 )
+from scripts.stamp_release import stamp_release
 from scripts.verify_catalog import verify_catalog
 
 
@@ -33,6 +35,8 @@ def write_catalog(path: Path, rows: list[dict[str, str]]) -> None:
         "page_url",
         "epub_url",
         "selection_note",
+        "release_tag",
+        "uploaded_at",
     ]
     with path.open("w", encoding="utf-8", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=fields, delimiter="\t")
@@ -65,6 +69,8 @@ def test_catalog_rejects_tiny_and_private_collections(tmp_path: Path) -> None:
         "page_url": "https://www.gutenberg.org/ebooks/43",
         "epub_url": "https://www.gutenberg.org/ebooks/43.epub3.images",
         "selection_note": "test",
+        "release_tag": "crbooks-2026-09-16",
+        "uploaded_at": "2026-09-16T20:45:41Z",
     }
     rows = []
     for index in range(61):
@@ -108,6 +114,8 @@ def test_local_verifier_checks_archive_and_cover(tmp_path: Path) -> None:
                 "asset_name": package_path.name,
                 "bytes": byte_count,
                 "sha256": sha256_file(package_path),
+                "release_tag": "v1",
+                "uploaded_at": "2026-09-16T20:45:41Z",
                 "cover_url": f"covers/{slug}.webp",
                 "download_url": f"https://github.com/example/crbooks/releases/download/v1/{slug}.crbook",
             }
@@ -144,6 +152,12 @@ def test_local_verifier_checks_archive_and_cover(tmp_path: Path) -> None:
         "errors": 0,
     }
 
+    stale_catalog = json.loads(catalog_path.read_text(encoding="utf-8"))
+    stale_catalog["books"][0]["uploaded_at"] = "2026-10-01T12:00:00Z"
+    catalog_path.write_text(json.dumps(stale_catalog), encoding="utf-8")
+    with pytest.raises(ValueError, match="not the latest per-book upload"):
+        verify_catalog(catalog_path, package_root)
+
 
 def test_book_model_keeps_source_provenance() -> None:
     book = Book(
@@ -157,9 +171,91 @@ def test_book_model_keeps_source_provenance() -> None:
         page_url="https://www.gutenberg.org/ebooks/33283",
         epub_url="https://www.gutenberg.org/ebooks/33283.epub3.images",
         selection_note="Accessible classic introduction.",
+        release_tag="crbooks-2026-09-16",
+        uploaded_at="2026-09-16T20:45:41Z",
     )
     assert book.gutenberg_id == 33283
     assert book.page_url.endswith("/33283")
+
+
+def test_latest_release_uses_newest_per_book_upload_only() -> None:
+    shared = {
+        "collection_slug": "Gutenberg_Fiction",
+        "category": "Fiction",
+        "author": "Author",
+        "language": "en",
+        "page_url": "https://www.gutenberg.org/ebooks/1",
+        "epub_url": "https://www.gutenberg.org/ebooks/1.epub3.images",
+        "selection_note": "test",
+    }
+    older = Book(
+        **shared,
+        gutenberg_id=1,
+        slug="older",
+        title="Older",
+        release_tag="crbooks-2026-09-16",
+        uploaded_at="2026-09-16T20:45:41Z",
+    )
+    newer = Book(
+        **shared,
+        gutenberg_id=2,
+        slug="newer",
+        title="Newer",
+        release_tag="crbooks-2026-10-01",
+        uploaded_at="2026-10-01T12:00:00Z",
+    )
+
+    assert latest_release([older, newer]) == (
+        "crbooks-2026-10-01",
+        "2026-10-01T12:00:00Z",
+    )
+
+
+def test_stamp_release_updates_only_selected_books(tmp_path: Path) -> None:
+    catalog_path = tmp_path / "catalog.tsv"
+    base = {
+        "collection_slug": "Gutenberg_Fiction",
+        "category": "Fiction",
+        "author": "Author",
+        "language": "en",
+        "selection_note": "test",
+        "release_tag": "crbooks-2026-09-16",
+        "uploaded_at": "2026-09-16T20:45:41Z",
+    }
+    rows = []
+    for gutenberg_id, slug in ((1, "unchanged"), (2, "updated")):
+        rows.append(
+            {
+                **base,
+                "gutenberg_id": str(gutenberg_id),
+                "slug": slug,
+                "title": slug.title(),
+                "page_url": f"https://www.gutenberg.org/ebooks/{gutenberg_id}",
+                "epub_url": f"https://www.gutenberg.org/ebooks/{gutenberg_id}.epub3.images",
+            }
+        )
+    write_catalog(catalog_path, rows)
+    catalog_path.chmod(0o644)
+    original_mode = catalog_path.stat().st_mode
+
+    assert (
+        stamp_release(
+            catalog_path,
+            book_slugs={"updated"},
+            release_tag="crbooks-2026-10-01",
+            uploaded_at="2026-10-01T08:00:00-04:00",
+        )
+        == 1
+    )
+    with catalog_path.open(encoding="utf-8", newline="") as handle:
+        stamped = {row["slug"]: row for row in csv.DictReader(handle, delimiter="\t")}
+
+    assert stamped["unchanged"]["release_tag"] == "crbooks-2026-09-16"
+    assert stamped["unchanged"]["uploaded_at"] == "2026-09-16T20:45:41Z"
+    assert stamped["updated"]["release_tag"] == "crbooks-2026-10-01"
+    assert stamped["updated"]["uploaded_at"] == "2026-10-01T12:00:00Z"
+    assert catalog_path.stat().st_mode == original_mode
+    assert b"\r\n" not in catalog_path.read_bytes()
 
 
 def test_publish_spec_renders_canonical_markdown_without_private_links(tmp_path: Path) -> None:
@@ -205,7 +301,21 @@ def test_publish_spec_rejects_unpublished_relative_images(tmp_path: Path) -> Non
 def test_catalog_navigation_links_to_format_spec() -> None:
     rendered = render_index(
         {
-            "books": [],
+            "books": [
+                {
+                    "collection_slug": "Gutenberg_Fiction",
+                    "category": "Fiction",
+                    "gutenberg_id": 43,
+                    "title": "Jekyll and Hyde",
+                    "author": "Robert Louis Stevenson",
+                    "cover_url": "covers/43_jekyll.webp",
+                    "download_url": "https://example.com/43_jekyll.crbook",
+                    "source_url": "https://www.gutenberg.org/ebooks/43",
+                    "release_tag": "v1",
+                    "uploaded_at": "2026-09-16T20:45:41Z",
+                    "size": "1.0 MB",
+                }
+            ],
             "categories": [],
             "book_count": 0,
             "total_size": "0 B",
@@ -218,5 +328,13 @@ def test_catalog_navigation_links_to_format_spec() -> None:
     assert '<a href="spec/">Format spec</a>' in rendered
     assert '<a href="spec/">format specification</a>' in rendered
     assert (
-        'Latest package upload: <time datetime="2026-09-16T20:45:41Z">September 16, 2026</time>'
+        '<p class="release-note"><span>Latest package upload</span>'
+        '<time datetime="2026-09-16T20:45:41Z">September 16, 2026</time></p>'
     ) in rendered
+    assert (
+        rendered.count(
+            '<p class="upload-date"><span>Uploaded</span> '
+            '<time datetime="2026-09-16T20:45:41Z">September 16, 2026</time></p>'
+        )
+        == 1
+    )

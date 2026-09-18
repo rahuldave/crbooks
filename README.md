@@ -1,6 +1,6 @@
 # Public CRBooks
 
-This repository publishes a curated catalog of **61 English public-domain
+This repository currently publishes a curated catalog of **61 English public-domain
 Project Gutenberg books** in `.crbook` format. Browse by subject, inspect the
 source edition, and download any book directly from the catalog website.
 
@@ -9,11 +9,14 @@ source edition, and download any book directly from the catalog website.
 **[Read the open CRBook format specification](https://rahuldave.com/crbooks/spec/)**
 
 The website is generated into `docs/`; the package archives live outside Git
-history as assets on one immutable, versioned GitHub Release. Every Download
+history as assets on immutable, versioned GitHub Releases. Every Download
 button points directly to its matching release asset. `docs/catalog.json`
-records the release upload timestamp plus the source URL, byte size, and
-SHA-256 checksum for every archive. The catalog page displays that upload date
-near the top so readers can tell when the downloadable packages were refreshed.
+records each book's release tag and upload timestamp plus its source URL, byte
+size, and SHA-256 checksum. The catalog page displays the latest catalog upload
+date near the top and repeats the package upload date on every book card. The
+per-book fields leave room for a future catalog to retain multiple immutable
+package or SQLite-backed versions without treating every book as if it changed
+in the same release.
 
 ## Open format specification
 
@@ -51,8 +54,8 @@ the browsable catalog.
 
 ## What is included
 
-The committed `catalogs/catalog.tsv` is the publication allowlist. It contains
-exactly 61 records in six collections:
+The committed `catalogs/catalog.tsv` is the publication allowlist and the
+current-package ledger. It currently contains 61 records in six collections:
 
 - Fiction
 - Drama and Poetry
@@ -77,19 +80,21 @@ uv sync --all-groups
 CRBOOK_PACKAGE_ROOT=/path/to/packages \
 CRBOOK_BOOKS_ROOT=/path/to/data/books \
 CRBOOK_SPEC_SOURCE=/path/to/close_reading/internal_docs/ipad_book_package_spec.md \
-CRBOOK_RELEASE_TAG=crbooks-YYYY-MM-DD \
-CRBOOK_RELEASE_PUBLISHED_AT=YYYY-MM-DDTHH:MM:SSZ \
 just build
 
 just verify-local
 just spec-check
 ```
 
-`just build` refuses anything other than the exact 61-row English public
-catalog, checks every archive against the package manifest, creates a compact
-cover thumbnail for every book, writes release-backed download URLs, and
-requires the timezone-aware GitHub release `publishedAt` timestamp. Obtain it
-after creating the release with:
+`just build` treats every source-catalog row as an explicit public allowlist
+entry, checks the exact package set against those rows, creates a compact cover
+thumbnail for every book, and writes each Download URL from that book's own
+`release_tag`. Each row also carries its normalized `uploaded_at` timestamp.
+The page header is computed as the maximum of those per-book timestamps; a site
+rebuild never changes an older book's date merely because other books were
+uploaded later.
+
+The release workflow obtains GitHub's authoritative timestamp with:
 
 ```bash
 gh release view crbooks-YYYY-MM-DD \
@@ -110,23 +115,29 @@ just gutenberg-package \
 
 ## Publish a release
 
-Use a new immutable tag whenever any package bytes change. With `gh`
-authenticated for the public repository:
+Use a new immutable tag whenever any package bytes change. Name only the books
+being uploaded; the release script uploads those packages, obtains GitHub's
+actual `publishedAt` timestamp, stamps only their source-catalog rows, rebuilds
+and verifies the complete site, and uploads the generated catalog manifests.
+Existing book rows and download URLs are left untouched.
+
+With `gh` authenticated for the public repository, an upload containing two
+books is:
 
 ```bash
-CRBOOK_RELEASE_TAG=crbooks-YYYY-MM-DD just release
 CRBOOK_RELEASE_TAG=crbooks-YYYY-MM-DD \
-CRBOOK_RELEASE_PUBLISHED_AT=YYYY-MM-DDTHH:MM:SSZ \
-just build
+just release first_book_slug second_book_slug
 git add docs catalogs
 git commit -m "release: publish YYYY-MM-DD catalog"
 git push
 just verify-release
 ```
 
-The final command downloads all 61 assets through the exact URLs used by the
-site and verifies every byte count and SHA-256 checksum. GitHub Pages is
-deployed from the committed `docs/` directory by the included Actions workflow.
+Omit book slugs only for an intentional full-catalog release. The final command
+downloads every current asset through its per-book immutable release URL and
+verifies every byte count and SHA-256 checksum, even when the catalog spans
+several releases. GitHub Pages is deployed from the committed `docs/` directory
+by the included Actions workflow.
 
 ## Add a future public-domain book
 
@@ -134,11 +145,18 @@ deployed from the committed `docs/` directory by the included Actions workflow.
    Gutenberg catalog. Pin its record URL and illustrated EPUB URL.
 2. Convert it, run the source/structure audits, ingest it, and complete the
    all-chapter browser crawl there.
-3. Copy the revised public allowlist to `catalogs/catalog.tsv` here and update
-   `EXPECTED_BOOK_COUNT` in `scripts/build_public_catalog.py`.
+3. Add its row to `catalogs/catalog.tsv`; leave `release_tag` and `uploaded_at`
+   empty until the release command stamps the actual GitHub values.
 4. Repackage the exact public catalog into a clean package directory.
-5. Choose a new release tag, rebuild this site, and run `just verify`.
-6. Publish the assets, push the generated site, and run `just verify-release`.
+5. Choose a new release tag and run `just release` with only the new or changed
+   book slugs. For two new books, only those two cards receive the new date.
+6. Review and commit the stamped ledger and generated site, push it, then run
+   `just verify-release`. The header advances to the newest per-book upload.
+
+The current ledger stores one active immutable package per book. A future
+version-history table or immutable SQLite catalog can retain older versions;
+the per-book release tag, upload timestamp, SHA-256, and URL already provide the
+stable identity needed for that extension.
 
 The full EPUB-to-CRBook conversion, validation, and ingestion guide lives in
 the Close Reading repository's `docs/crbook-publishing.md`. That reusable

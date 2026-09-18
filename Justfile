@@ -2,7 +2,6 @@ set shell := ["bash", "-euo", "pipefail", "-c"]
 
 repo := env_var_or_default("CRBOOK_REPOSITORY", "rahuldave/crbooks")
 tag := env_var_or_default("CRBOOK_RELEASE_TAG", "crbooks-2026-09-16")
-release_published_at := env_var_or_default("CRBOOK_RELEASE_PUBLISHED_AT", "2026-09-16T20:45:41Z")
 source_catalog := env_var_or_default("CRBOOK_SOURCE_CATALOG", "catalogs/catalog.tsv")
 package_root := env_var_or_default("CRBOOK_PACKAGE_ROOT", "dist/packages")
 books_root := env_var_or_default("CRBOOK_BOOKS_ROOT", "../close_reading/data/books")
@@ -18,8 +17,6 @@ build:
     --books-root {{books_root}} \
     --spec-source {{spec_source}} \
     --repository {{repo}} \
-    --release-tag {{tag}} \
-    --release-published-at {{release_published_at}} \
     --output-root docs
 
 fmt:
@@ -48,5 +45,5 @@ verify: lint test verify-local
 # Maintainer verification when the canonical sibling repository is available.
 verify-source: verify spec-check
 
-release:
-  scripts/publish_release.sh {{repo}} {{tag}} {{package_root}}
+release *books:
+  scripts/publish_release.sh {{repo}} {{tag}} {{package_root}} {{books}}

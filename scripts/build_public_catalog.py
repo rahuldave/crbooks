@@ -28,7 +28,6 @@ ALLOWED_COLLECTIONS = {
     "Gutenberg_Science_and_Nature",
     "Gutenberg_History_and_Memoir",
 }
-EXPECTED_BOOK_COUNT = 61
 CATALOG_FIELDS = {
     "collection_slug",
     "category",
@@ -40,6 +39,8 @@ CATALOG_FIELDS = {
     "page_url",
     "epub_url",
     "selection_note",
+    "release_tag",
+    "uploaded_at",
 }
 
 
@@ -82,6 +83,8 @@ class Book:
     page_url: str
     epub_url: str
     selection_note: str
+    release_tag: str
+    uploaded_at: str
 
 
 def sha256_file(path: Path) -> str:
@@ -112,12 +115,14 @@ def load_catalog(path: Path) -> list[Book]:
                 page_url=row["page_url"],
                 epub_url=row["epub_url"],
                 selection_note=row["selection_note"],
+                release_tag=row["release_tag"].strip(),
+                uploaded_at=normalize_release_published_at(row["uploaded_at"]),
             )
             for row in reader
         ]
 
-    if len(books) != EXPECTED_BOOK_COUNT:
-        raise ValueError(f"expected {EXPECTED_BOOK_COUNT} books, found {len(books)}")
+    if not books:
+        raise ValueError("catalog does not contain any books")
     if len({book.slug for book in books}) != len(books):
         raise ValueError("catalog has duplicate slugs")
     if len({book.gutenberg_id for book in books}) != len(books):
@@ -129,6 +134,8 @@ def load_catalog(path: Path) -> list[Book]:
     if non_english:
         raise ValueError(f"catalog contains non-English books: {non_english}")
     for book in books:
+        if not book.release_tag:
+            raise ValueError(f"catalog release tag is empty for {book.slug}")
         expected_page = f"https://www.gutenberg.org/ebooks/{book.gutenberg_id}"
         if book.page_url != expected_page:
             raise ValueError(f"unexpected Project Gutenberg page URL for {book.slug}")
@@ -184,6 +191,23 @@ def format_release_date(value: str) -> str:
     return f"{published_at:%B} {published_at.day}, {published_at.year}"
 
 
+def latest_release(books: list[Book]) -> tuple[str, str]:
+    """Return the tag and timestamp for the newest per-book package upload."""
+
+    if not books:
+        raise ValueError("catalog does not contain any books")
+    latest_uploaded_at = max(book.uploaded_at for book in books)
+    latest_release_tags = {
+        book.release_tag for book in books if book.uploaded_at == latest_uploaded_at
+    }
+    if len(latest_release_tags) != 1:
+        raise ValueError(
+            "books at the latest upload timestamp must share one release tag: "
+            f"{sorted(latest_release_tags)}"
+        )
+    return next(iter(latest_release_tags)), latest_uploaded_at
+
+
 def copy_cover(book: Book, books_root: Path, covers_root: Path) -> str:
     book_root = books_root / book.collection_slug / book.slug
     metadata_path = book_root / "metadata.json"
@@ -226,6 +250,8 @@ def render_card(book: dict[str, Any], index: int) -> str:
         [book["title"], book["author"], book["category"], str(book["gutenberg_id"])]
     ).lower()
     loading = "eager" if index < 8 else "lazy"
+    uploaded_at = normalize_release_published_at(str(book["uploaded_at"]))
+    upload_date = format_release_date(uploaded_at)
     return f"""
       <article class="book-card" data-category="{html.escape(book["collection_slug"])}" data-search="{html.escape(search_text, quote=True)}">
         <div class="cover-wrap">
@@ -235,6 +261,7 @@ def render_card(book: dict[str, Any], index: int) -> str:
           <p class="category-label">{html.escape(book["category"])}</p>
           <h3>{html.escape(book["title"])}</h3>
           <p class="author">{html.escape(book["author"])}</p>
+          <p class="upload-date"><span>Uploaded</span> <time datetime="{html.escape(uploaded_at)}">{html.escape(upload_date)}</time></p>
           <div class="card-actions">
             <a class="download" href="{html.escape(book["download_url"])}">Download <span>{html.escape(book["size"])}</span></a>
             <a class="source" href="{html.escape(book["source_url"])}">Project Gutenberg</a>
@@ -367,7 +394,7 @@ def render_index(manifest: dict[str, Any]) -> str:
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Download 61 validated public-domain books in CRBook format.">
+  <meta name="description" content="Download {manifest["book_count"]} validated public-domain books in CRBook format.">
   <title>CRBooks · A public close-reading library</title>
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -385,7 +412,7 @@ def render_index(manifest: dict[str, Any]) -> str:
       <p class="eyebrow">Public-domain editions · Built for close reading</p>
       <h1>Books worth<br><em>reading slowly.</em></h1>
       <p class="lede">A curated library of {manifest["book_count"]} English Project Gutenberg works, packaged for the Close Reading reader. Every download is verified and traceable to its source edition.</p>
-      <p class="release-note">Latest package upload: <time datetime="{html.escape(release_published_at)}">{html.escape(release_date)}</time></p>
+      <p class="release-note"><span>Latest package upload</span><time datetime="{html.escape(release_published_at)}">{html.escape(release_date)}</time></p>
     </div>
     <dl class="stats">
       <div><dt>{manifest["book_count"]}</dt><dd>books</dd></div>
@@ -432,14 +459,12 @@ def build_catalog(
     package_root: Path,
     books_root: Path,
     repository: str,
-    release_tag: str,
-    release_published_at: str,
     output_root: Path,
     site_root: Path,
     spec_source_path: Path,
 ) -> dict[str, Any]:
     books = load_catalog(catalog_path)
-    normalized_release_published_at = normalize_release_published_at(release_published_at)
+    latest_release_tag, latest_uploaded_at = latest_release(books)
     package_manifest_path = package_root / "manifest.json"
     packages = load_packages(package_manifest_path)
     expected = {(book.collection_slug, book.slug) for book in books}
@@ -490,7 +515,9 @@ def build_catalog(
                 "source_epub_url": book.epub_url,
                 "selection_note": book.selection_note,
                 "asset_name": asset_name,
-                "download_url": release_asset_url(repository, release_tag, asset_name),
+                "release_tag": book.release_tag,
+                "uploaded_at": book.uploaded_at,
+                "download_url": release_asset_url(repository, book.release_tag, asset_name),
                 "bytes": byte_count,
                 "size": format_bytes(byte_count),
                 "sha256": digest,
@@ -509,10 +536,10 @@ def build_catalog(
     ]
     manifest = {
         "format": "public-crbook-catalog",
-        "version": 1,
+        "version": 2,
         "repository": repository,
-        "release_tag": release_tag,
-        "release_published_at": normalized_release_published_at,
+        "release_tag": latest_release_tag,
+        "release_published_at": latest_uploaded_at,
         "book_count": len(public_books),
         "total_bytes": total_bytes,
         "total_size": format_bytes(total_bytes),
@@ -536,6 +563,8 @@ def build_catalog(
                 "author",
                 "language",
                 "source_url",
+                "release_tag",
+                "uploaded_at",
                 "download_url",
                 "bytes",
                 "sha256",
@@ -560,6 +589,8 @@ def writer_fields() -> tuple[str, ...]:
         "author",
         "language",
         "source_url",
+        "release_tag",
+        "uploaded_at",
         "download_url",
         "bytes",
         "sha256",
@@ -572,12 +603,6 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--package-root", type=Path, default=Path("dist/packages"))
     parser.add_argument("--books-root", type=Path, required=True)
     parser.add_argument("--repository", default="rahuldave/crbooks")
-    parser.add_argument("--release-tag", required=True)
-    parser.add_argument(
-        "--release-published-at",
-        required=True,
-        help="GitHub release publishedAt timestamp in ISO-8601 format",
-    )
     parser.add_argument("--output-root", type=Path, default=Path("docs"))
     parser.add_argument("--site-root", type=Path, default=Path("site"))
     parser.add_argument(
@@ -595,8 +620,6 @@ def main() -> int:
         package_root=args.package_root.resolve(),
         books_root=args.books_root.resolve(),
         repository=args.repository,
-        release_tag=args.release_tag,
-        release_published_at=args.release_published_at,
         output_root=args.output_root.resolve(),
         site_root=args.site_root.resolve(),
         spec_source_path=args.spec_source.resolve(),
