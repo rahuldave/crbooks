@@ -1,7 +1,8 @@
 set shell := ["bash", "-euo", "pipefail", "-c"]
 
 repo := env_var_or_default("CRBOOK_REPOSITORY", "rahuldave/crbooks")
-tag := env_var_or_default("CRBOOK_RELEASE_TAG", "crbooks-2026-09-04")
+tag := env_var_or_default("CRBOOK_RELEASE_TAG", "crbooks-2026-09-16")
+release_published_at := env_var_or_default("CRBOOK_RELEASE_PUBLISHED_AT", "2026-09-16T20:45:41Z")
 source_catalog := env_var_or_default("CRBOOK_SOURCE_CATALOG", "catalogs/catalog.tsv")
 package_root := env_var_or_default("CRBOOK_PACKAGE_ROOT", "dist/packages")
 books_root := env_var_or_default("CRBOOK_BOOKS_ROOT", "../close_reading/data/books")
@@ -18,6 +19,7 @@ build:
     --spec-source {{spec_source}} \
     --repository {{repo}} \
     --release-tag {{tag}} \
+    --release-published-at {{release_published_at}} \
     --output-root docs
 
 fmt:

@@ -11,7 +11,9 @@ source edition, and download any book directly from the catalog website.
 The website is generated into `docs/`; the package archives live outside Git
 history as assets on one immutable, versioned GitHub Release. Every Download
 button points directly to its matching release asset. `docs/catalog.json`
-records the source URL, byte size, and SHA-256 checksum for every archive.
+records the release upload timestamp plus the source URL, byte size, and
+SHA-256 checksum for every archive. The catalog page displays that upload date
+near the top so readers can tell when the downloadable packages were refreshed.
 
 ## Open format specification
 
@@ -76,6 +78,7 @@ CRBOOK_PACKAGE_ROOT=/path/to/packages \
 CRBOOK_BOOKS_ROOT=/path/to/data/books \
 CRBOOK_SPEC_SOURCE=/path/to/close_reading/internal_docs/ipad_book_package_spec.md \
 CRBOOK_RELEASE_TAG=crbooks-YYYY-MM-DD \
+CRBOOK_RELEASE_PUBLISHED_AT=YYYY-MM-DDTHH:MM:SSZ \
 just build
 
 just verify-local
@@ -84,7 +87,16 @@ just spec-check
 
 `just build` refuses anything other than the exact 61-row English public
 catalog, checks every archive against the package manifest, creates a compact
-cover thumbnail for every book, and writes release-backed download URLs.
+cover thumbnail for every book, writes release-backed download URLs, and
+requires the timezone-aware GitHub release `publishedAt` timestamp. Obtain it
+after creating the release with:
+
+```bash
+gh release view crbooks-YYYY-MM-DD \
+  --repo rahuldave/crbooks \
+  --json publishedAt \
+  --jq .publishedAt
+```
 
 To create the packages from the sibling Close Reading repository first:
 
@@ -103,7 +115,9 @@ authenticated for the public repository:
 
 ```bash
 CRBOOK_RELEASE_TAG=crbooks-YYYY-MM-DD just release
-CRBOOK_RELEASE_TAG=crbooks-YYYY-MM-DD just build
+CRBOOK_RELEASE_TAG=crbooks-YYYY-MM-DD \
+CRBOOK_RELEASE_PUBLISHED_AT=YYYY-MM-DDTHH:MM:SSZ \
+just build
 git add docs catalogs
 git commit -m "release: publish YYYY-MM-DD catalog"
 git push

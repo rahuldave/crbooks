@@ -7,7 +7,12 @@ import argparse
 import json
 from pathlib import Path
 
-from scripts.build_public_catalog import ALLOWED_COLLECTIONS, EXPECTED_BOOK_COUNT, sha256_file
+from scripts.build_public_catalog import (
+    ALLOWED_COLLECTIONS,
+    EXPECTED_BOOK_COUNT,
+    normalize_release_published_at,
+    sha256_file,
+)
 
 
 def verify_catalog(catalog_path: Path, package_root: Path) -> dict[str, int]:
@@ -18,6 +23,12 @@ def verify_catalog(catalog_path: Path, package_root: Path) -> dict[str, int]:
         errors.append(f"expected {EXPECTED_BOOK_COUNT} books, found {len(books)}")
     if catalog.get("book_count") != len(books):
         errors.append("book_count does not match books")
+    try:
+        published_at = str(catalog["release_published_at"])
+        if normalize_release_published_at(published_at) != published_at:
+            errors.append("release_published_at is not normalized UTC")
+    except (KeyError, ValueError):
+        errors.append("catalog does not declare a valid release_published_at")
 
     spec = catalog.get("spec")
     if not isinstance(spec, dict):

@@ -10,6 +10,7 @@ import html
 import json
 import shutil
 from dataclasses import dataclass
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 from urllib.parse import quote, urlparse
@@ -155,6 +156,32 @@ def release_asset_url(repository: str, release_tag: str, asset_name: str) -> str
         f"https://github.com/{repository}/releases/download/"
         f"{quote(release_tag, safe='')}/{quote(asset_name, safe='._-')}"
     )
+
+
+def normalize_release_published_at(value: str) -> str:
+    """Validate an ISO-8601 release timestamp and normalize it to UTC seconds."""
+
+    candidate = value.strip()
+    if not candidate:
+        raise ValueError("release published timestamp is empty")
+    if candidate.endswith("Z"):
+        candidate = f"{candidate[:-1]}+00:00"
+    try:
+        published_at = datetime.fromisoformat(candidate)
+    except ValueError as error:
+        raise ValueError("release published timestamp must be ISO-8601") from error
+    if published_at.tzinfo is None or published_at.utcoffset() is None:
+        raise ValueError("release published timestamp must include a timezone")
+    published_at = published_at.astimezone(UTC).replace(microsecond=0)
+    return published_at.isoformat(timespec="seconds").replace("+00:00", "Z")
+
+
+def format_release_date(value: str) -> str:
+    """Return a readable UTC calendar date for a release timestamp."""
+
+    normalized = normalize_release_published_at(value)
+    published_at = datetime.fromisoformat(normalized.replace("Z", "+00:00"))
+    return f"{published_at:%B} {published_at.day}, {published_at.year}"
 
 
 def copy_cover(book: Book, books_root: Path, covers_root: Path) -> str:
@@ -327,6 +354,8 @@ def publish_spec(*, source_path: Path, output_root: Path) -> dict[str, str]:
 def render_index(manifest: dict[str, Any]) -> str:
     books = manifest["books"]
     categories = manifest["categories"]
+    release_published_at = normalize_release_published_at(str(manifest["release_published_at"]))
+    release_date = format_release_date(release_published_at)
     category_buttons = "\n".join(
         f'<button type="button" data-filter="{html.escape(category["collection_slug"])}">'
         f"{html.escape(category['name'])} <span>{category['book_count']}</span></button>"
@@ -356,6 +385,7 @@ def render_index(manifest: dict[str, Any]) -> str:
       <p class="eyebrow">Public-domain editions · Built for close reading</p>
       <h1>Books worth<br><em>reading slowly.</em></h1>
       <p class="lede">A curated library of {manifest["book_count"]} English Project Gutenberg works, packaged for the Close Reading reader. Every download is verified and traceable to its source edition.</p>
+      <p class="release-note">Latest package upload: <time datetime="{html.escape(release_published_at)}">{html.escape(release_date)}</time></p>
     </div>
     <dl class="stats">
       <div><dt>{manifest["book_count"]}</dt><dd>books</dd></div>
@@ -388,7 +418,7 @@ def render_index(manifest: dict[str, Any]) -> str:
 
   <footer>
     <p>CRBook packages are ZIP-compatible reading bundles described by the open <a href="spec/">format specification</a>. The books are public-domain Project Gutenberg editions; availability and rights may differ outside the United States.</p>
-    <p>Release <a href="https://github.com/{html.escape(manifest["repository"])}/releases/tag/{html.escape(manifest["release_tag"])}">{html.escape(manifest["release_tag"])}</a> · <a href="catalog.json">checksums and metadata</a></p>
+    <p>Release <a href="https://github.com/{html.escape(manifest["repository"])}/releases/tag/{html.escape(manifest["release_tag"])}">{html.escape(manifest["release_tag"])}</a> · Uploaded <time datetime="{html.escape(release_published_at)}">{html.escape(release_date)}</time> · <a href="catalog.json">checksums and metadata</a></p>
   </footer>
   <script src="app.js" defer></script>
 </body>
@@ -403,11 +433,13 @@ def build_catalog(
     books_root: Path,
     repository: str,
     release_tag: str,
+    release_published_at: str,
     output_root: Path,
     site_root: Path,
     spec_source_path: Path,
 ) -> dict[str, Any]:
     books = load_catalog(catalog_path)
+    normalized_release_published_at = normalize_release_published_at(release_published_at)
     package_manifest_path = package_root / "manifest.json"
     packages = load_packages(package_manifest_path)
     expected = {(book.collection_slug, book.slug) for book in books}
@@ -480,6 +512,7 @@ def build_catalog(
         "version": 1,
         "repository": repository,
         "release_tag": release_tag,
+        "release_published_at": normalized_release_published_at,
         "book_count": len(public_books),
         "total_bytes": total_bytes,
         "total_size": format_bytes(total_bytes),
@@ -540,6 +573,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--books-root", type=Path, required=True)
     parser.add_argument("--repository", default="rahuldave/crbooks")
     parser.add_argument("--release-tag", required=True)
+    parser.add_argument(
+        "--release-published-at",
+        required=True,
+        help="GitHub release publishedAt timestamp in ISO-8601 format",
+    )
     parser.add_argument("--output-root", type=Path, default=Path("docs"))
     parser.add_argument("--site-root", type=Path, default=Path("site"))
     parser.add_argument(
@@ -558,6 +596,7 @@ def main() -> int:
         books_root=args.books_root.resolve(),
         repository=args.repository,
         release_tag=args.release_tag,
+        release_published_at=args.release_published_at,
         output_root=args.output_root.resolve(),
         site_root=args.site_root.resolve(),
         spec_source_path=args.spec_source.resolve(),
